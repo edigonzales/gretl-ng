@@ -1,0 +1,67 @@
+ext {
+    // ioxIliVersion = '1.20.15'
+    ilivalidatorVersion = '1.11.10'
+    // ilivalidatorCustomFunctions = '1.1.47'
+    ili2dbVersion = '4.5.0'
+    ili2pgVersion = '4.5.0'
+    // ili2gpkgVersion = '4.3.2'
+    // ioxWkfVersion = '1.0.2'
+    // ehiSqlgenVersion = '1.13.7'
+    
+    // oerebIconizerVersion = '2.0.9'
+    // av2chVersion = '1.1.6'
+    // av2geobauVersion = '1.0.2-SNAPSHOT'
+    
+    //awsSdkVersion = '2.15.64'
+    
+    // apacheCommonsIoVersion = '2.6'
+    // apacheCommonsNetVersion = '3.6'
+    // apacheCommonsCodeVersion = '1.11'
+    
+    // jacksonVersion = '2.10.0'
+
+    postgresqlVersion = '42.2.22'
+    sqliteJdbcVersion = '3.8.11.2'
+    derbyVersion = '10.15.2.0'
+    oracleVersion = '19.3.0.0'
+    
+    junitVersion = '5.7.1'
+    // mockFtpServerVersion = '2.7.1'   
+    // testContainersVersion = '1.15.1'
+
+    // ioxIliDependency = [ group: 'ch.interlis', name: 'iox-ili', version: ioxIliVersion ]
+    ilivalidatorDependency = [ group: 'ch.interlis', name: 'ilivalidator', version: ilivalidatorVersion ]
+    // ilivalidatorCustomFunctionsDependency = [ group: 'io.github.sogis', name: 'ilivalidator-custom-functions', version: ilivalidatorCustomFunctions ]
+    ili2dbDependency = [ group: 'ch.interlis', name: 'ili2db', version: ili2dbVersion ]
+    ili2pgDependency = [ group: 'ch.interlis', name: 'ili2pg', version: ili2pgVersion ]
+    // ili2gpkgDependency = [ group: 'ch.interlis', name: 'ili2gpkg', version: ili2gpkgVersion ]
+    // ioxWkfDependency = [ group: 'ch.interlis', name: 'iox-wkf', version: ioxWkfVersion ]
+    
+    // TODO: Brauche ich das explizit für SqlExecutor/Db2Db?
+    // ehiSqlgenDependency = [ group: 'ch.ehi', name: 'ehisqlgen', version: ehiSqlgenVersion ]
+
+    // oerebIconizerDependency = [ group: 'io.github.sogis', name: 'oereb-iconizer', version: oerebIconizerVersion ]
+    // av2chDependency = [ group: 'io.github.sogis', name: 'av2ch', version: av2chVersion ]
+    // av2geobauDependency = [ group: 'ch.interlis', name: 'av2geobau', version: av2geobauVersion ]
+    
+    // awsSdkS3Dependency = [ group: 'software.amazon.awssdk', name: 's3', version: '2.15.64' ]
+    
+    // apacheCommonsIoDependency = [ group: 'commons-io', name: 'commons-io', version: apacheCommonsIoVersion ]
+    // apacheCommonsNetDependency = [ group: 'commons-net', name: 'commons-net', version: apacheCommonsNetVersion ]
+    // apacheCommonsCodeDependency = [ group: 'commons-codec', name: 'commons-codec', version: apacheCommonsCodeVersion ]
+    
+    // jacksonCoreDependency = [ group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion ]
+    // jacksonDatabindDependency = [ group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion ]
+    
+    postgresqlDependency = [ group: 'org.postgresql', name: 'postgresql', version: postgresqlVersion ]
+    sqliteJdbcDependency = [group: 'org.xerial', name: 'sqlite-jdbc', version: sqliteJdbcVersion]
+    derbyDependency = [group: 'org.apache.derby', name: 'derby', version: derbyVersion]
+    oracleDependency = [ group: 'com.oracle.ojdbc', name: 'ojdbc8', version: oracleVersion]
+    
+    junitDependency = [ group: 'org.junit.jupiter', name: 'junit-jupiter', version: junitVersion ]
+    // mockFtpServerDependency = [ group: 'org.mockftpserver', name: 'MockFtpServer', version: mockFtpServerVersion ]
+    // testContainersDependency = [ group: 'org.testcontainers', name: 'testcontainers', version: testContainersVersion]
+    // testContainersPostgresDependency = [ group: 'org.testcontainers', name: 'postgresql', version: testContainersVersion]
+    // testContainersOracleDependency = [ group: 'org.testcontainers', name: 'oracle-xe', version: testContainersVersion]
+}
+

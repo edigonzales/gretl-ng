@@ -1,0 +1,76 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.15.0'
+}
+
+apply from: "$rootDir/gradle/versioning.gradle"
+apply from: 'dependencies.gradle'
+
+group = 'io.github.sogis'
+version = '0.0.1'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven { url "http://jars.interlis.ch"; allowInsecureProtocol true }
+}
+
+dependencies {
+    api gradleApi()
+  
+    api ilivalidatorDependency
+    api ili2dbDependency
+    api ili2pgDependency
+
+    runtimeOnly postgresqlDependency
+    runtimeOnly sqliteJdbcDependency
+    runtimeOnly derbyDependency
+    runtimeOnly oracleDependency
+
+    testImplementation junitDependency
+}
+
+gradlePlugin {
+    plugins {
+        gretlPlugin {
+            id = 'ch.so.agi.gretl-ng'
+            implementationClass = 'ch.so.agi.gretl.gradle.GretlPlugin'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/sogis/gretl' 
+    vcsUrl = 'https://github.com/sogis/gretl.git' 
+    tags = ['etl', 'gis', 'sdi', 'geo', 'geoinformation', 'interlis', 'geopackage', 'shapefile', 'csv', 'database', 'postgresql', 'sqlite', 'ili2pg', 'ilivalidator'] 
+    
+    plugins { 
+        gretlPlugin {  
+            displayName = 'GRETL' 
+            description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = 'gretl-ng'
+
+            from components.java
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
