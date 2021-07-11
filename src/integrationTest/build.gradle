@@ -5,36 +5,53 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "http://jars.interlis.ch"; allowInsecureProtocol true }
     }
+    
     dependencies {
         classpath "io.github.sogis:gretl-ng:latest.integration"
     }
+    
 }
+
+/*
+plugins {
+    //id 'ch.so.agi.gretl-ng' version '0.0.1'
+    id "com.gradle.enterprise"
+}
+*/
 
 apply plugin: "ch.so.agi.gretl-ng"
 
+
+
 import ch.so.agi.gretl.tasks.*
 
-ext {
-    foo = "a"
-}
 
-task fubar() {
+def foo = 'a'
+
+def property = objects.property(String)
+//property.set("arsch")
+
+tasks.register('fubar') {
     doLast {
         println foo
-        foo = "b"
+        foo = 'b'
         println foo
+        property.set("lulatsch")
     }
 }
 
+/*
 task importData() {
     doLast {
         println foo
     }
 }
+*/
 
-task validateData(type: IliValidator, dependsOn: 'fubar') {
+tasks.register('validateData', IliValidator) {
     models = "DM01"
-    greeting = foo
+    //greeting = foo
     modeldir = foo
-    dummy = foo
+    dummy.set(property)
+    disableValidation.set(property)
 }
