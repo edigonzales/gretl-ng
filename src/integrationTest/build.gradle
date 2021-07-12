@@ -49,9 +49,18 @@ task importData() {
 */
 
 tasks.register('validateData', IliValidator) {
-    models = "DM01"
+    models = "DM01AVSO24LV95"
+    dataFiles = ["/Users/stefan/Downloads/254900.itf"]
+    //logFile = file("/Users/stefan/Downloads/ilivalidator.log")
+
+
+    /*
+    dataFiles = fileTree("/Users/stefan/Downloads/").matching {
+    	include"*.itf"
+    }
+    */
+    
     //greeting = foo
-    modeldir = foo
-    dummy.set(property)
-    disableValidation.set(property)
+    //modeldir = foo
+    //dummy.set(property)
 }

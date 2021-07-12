@@ -3,23 +3,18 @@ package ch.so.agi.gretl.tasks.impl;
 import ch.ehi.basics.settings.Settings;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.interlis2.validator.Validator;
 
-import java.util.List;
-
-public abstract class AbstractValidatorTask extends DefaultTask {
-//  @InputFiles
-//  public Object dataFiles;
+public abstract class AbstractValidatorTask extends DefaultTask {    
+    @InputFiles
+    public abstract Property<Object> getDataFiles();
     
     @Input
     @Optional
@@ -101,20 +96,18 @@ public abstract class AbstractValidatorTask extends DefaultTask {
         return failOnError;
     }
 
-    private boolean validationOk = true;
+    protected boolean validationOk = true;
 
     protected void initSettings(Settings settings) {
-        
-        
         settings.setValue(Validator.SETTING_DISABLE_STD_LOGGER, Validator.TRUE);
-        if (getModels().get() != null) {
+        if (getModels().isPresent()) {
             settings.setValue(Validator.SETTING_MODELNAMES, getModels().get());
         }
-        if (getModeldir().get() != null) {
+        if (getModeldir().isPresent()) {
             settings.setValue(Validator.SETTING_ILIDIRS, getModeldir().get());
         }
-        if (getConfigFile().get() != null) {
-            settings.setValue(Validator.SETTING_CONFIGFILE, getConfigFile().get().getAsFile().getPath());
+        if (getConfigFile().isPresent()) {
+            settings.setValue(Validator.SETTING_CONFIGFILE, getConfigFile().get().getAsFile().getAbsolutePath());
         }
         if (forceTypeValidation.get()) {
             settings.setValue(Validator.SETTING_FORCE_TYPE_VALIDATION, Validator.TRUE);
@@ -133,20 +126,20 @@ public abstract class AbstractValidatorTask extends DefaultTask {
             settings.setValue(ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_LINETABLES,
                     ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_LINETABLES_DO);
         }
-//        if (logFile != null) {
-//            settings.setValue(Validator.SETTING_LOGFILE, this.getProject().file(logFile).getPath());
-//        }
-//        if (xtflogFile != null) {
-//            settings.setValue(Validator.SETTING_XTFLOG, this.getProject().file(xtflogFile).getPath());
-//        }
+        if (getLogFile().isPresent()) {
+            settings.setValue(Validator.SETTING_LOGFILE, getLogFile().get().getAsFile().getAbsolutePath());
+        }
+        if (getXtfLogFile().isPresent()) {
+            settings.setValue(Validator.SETTING_XTFLOG, getXtfLogFile().get().getAsFile().getAbsolutePath());
+        }
 //        if (pluginFolder != null) {
 //            settings.setValue(Validator.SETTING_PLUGINFOLDER, this.getProject().file(pluginFolder).getPath());
 //        }
-//        if (proxy != null) {
-//            settings.setValue(ch.interlis.ili2c.gui.UserSettings.HTTP_PROXY_HOST, proxy);
-//        }
-//        if (proxyPort != null) {
-//            settings.setValue(ch.interlis.ili2c.gui.UserSettings.HTTP_PROXY_PORT, proxyPort.toString());
-//        }
+        if (getProxy().isPresent()) {
+            settings.setValue(ch.interlis.ili2c.gui.UserSettings.HTTP_PROXY_HOST, getProxy().get());
+        }
+        if (getProxyPort().isPresent()) {
+            settings.setValue(ch.interlis.ili2c.gui.UserSettings.HTTP_PROXY_PORT, getProxyPort().get().toString());
+        }
     }
 }
