@@ -16,25 +16,32 @@ import java.util.Set;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.TaskAction;
 
-public abtract class Ili2pgImport extends Ili2pgAbstractTask {
+public abstract class Ili2pgImport extends Ili2pgAbstractTask {
     @InputFile
-    public Object dataFile = null;
+    public abstract Property<Object> getDataFile();
+    
+    @Nested
+    public abstract Resource getResource(); 
+
+    
 
     @TaskAction
     public void importData() {
         Config settings = createConfig();
         int function = Config.FC_IMPORT;
-        if (dataFile == null) {
-            return;
-        }
+        
+        Object dataFile = getDataFile().get();
         FileCollection dataFilesCollection=null;
-        if(dataFile instanceof FileCollection) {
-            dataFilesCollection=(FileCollection)dataFile;
+        if (dataFile instanceof FileCollection) {
+            dataFilesCollection = (FileCollection)dataFile;
         }else {
-            dataFilesCollection=getProject().files(dataFile);
+            dataFilesCollection = getProject().files(dataFile);
         }
         if (dataFilesCollection == null || dataFilesCollection.isEmpty()) {
             return;
@@ -44,49 +51,11 @@ public abtract class Ili2pgImport extends Ili2pgAbstractTask {
             String fileName = fileObj.getPath();
             files.add(fileName);
         }
-        java.util.List<String> datasetNames=null;
-        if (dataset != null) {
-            if(dataset instanceof String) {
-                datasetNames=new ArrayList<String>();
-                datasetNames.add((String)dataset);
-            } else if (dataset instanceof FileCollection) {
-                Set<File> datasetFiles = ((FileTree)dataset).getFiles();
-                datasetNames = new ArrayList<String>();                
-                for (File datasetFile : datasetFiles) {
-                    if (datasetSubstring != null) {  
-                        if (datasetSubstring.size() > 1) {
-                            datasetNames.add(datasetFile.getName().replaceFirst("[.][^.]+$", "").substring(datasetSubstring.getFrom(), datasetSubstring.getTo()));
-                        } else {
-                            datasetNames.add(datasetFile.getName().replaceFirst("[.][^.]+$", "").substring(datasetSubstring.getFrom()));
-                        }
-                    } else {
-                        datasetNames.add(datasetFile.getName().replaceFirst("[.][^.]+$", ""));
-                    }
-                }
-            } else {
-                datasetNames=new ArrayList<String>();
-                if (datasetSubstring != null) {
-                    List<String> fileNames = (java.util.List)dataset;
-                    for (String fileName : fileNames) {
-                        if (datasetSubstring.size() > 1) {
-                            datasetNames.add(fileName.substring(datasetSubstring.getFrom(), datasetSubstring.getTo()));
-                        } else {
-                            datasetNames.add(fileName.substring(datasetSubstring.getFrom()));
-                        }
-                    }
-                } else {
-                    datasetNames=(java.util.List)dataset;
-                }
-            }
-            if(files.size()!=datasetNames.size()) {
-                throw new GradleException("number of dataset names ("+datasetNames.size()+") doesn't match number of files ("+files.size()+")");
-            }
-        }
         
         ch.ehi.basics.logging.FileListener fileLogger=null;
-        if(logFile!=null){
+        if (getLogFile().isPresent()) {
             // setup logger here, so that multiple file imports result in one logfile
-            java.io.File logFilepath=this.getProject().file(logFile);
+            File logFilepath=this.getProject().file(getLogFile().get().getAsFile());
             fileLogger=new FileLogger(logFilepath);
             EhiLogger.getInstance().addListener(fileLogger);
         }
@@ -95,23 +64,29 @@ public abtract class Ili2pgImport extends Ili2pgAbstractTask {
             for(String xtfFilename:files) {
                 if (Ili2db.isItfFilename(xtfFilename)) {
                     settings.setItfTransferfile(true);
-                }else {
+                } else {
                     settings.setItfTransferfile(false);
-                }
-                if(datasetNames!=null) {
-                    settings.setDatasetName(datasetNames.get(i));
                 }
                 settings.setXtffile(xtfFilename);
                 run(function, settings);            
                 i++;
             }
-        }finally{
-            if(fileLogger!=null){
+        } finally {
+            if (fileLogger != null) {
                 EhiLogger.getInstance().removeListener(fileLogger);
                 fileLogger.close();
                 fileLogger=null;
             }
         }
-        
     }
+
+    public abstract class Resource {
+        @Input
+        public abstract Property<String> getHostName();
+        @Input
+        public abstract Property<String> getPath();
+    }
+
 }
+
+

@@ -7,6 +7,7 @@ import ch.ehi.ili2db.gui.Config;
 import ch.so.agi.gretl.api.Connector;
 import ch.so.agi.gretl.logging.GretlLogger;
 import ch.so.agi.gretl.logging.LogEnvironment;
+import ch.so.agi.gretl.tasks.Database;
 import ch.so.agi.gretl.util.TaskUtil;
 import groovy.lang.Range;
 
@@ -14,9 +15,11 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskExecutionException;
@@ -29,9 +32,18 @@ import java.util.List;
 public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected GretlLogger log;
 
-    @Input
-    public abstract Property<Connector> getDatabase();
+//    @Input
+//    public abstract ListProperty<String> getDatabase();
+//    @Input
+//    public abstract Property<Connector> getDatabase();
+//    @Nested
+//    public Database database;
     
+    @Nested
+    public abstract Database getDatabase();
+
+//    public abstract void setDatabase(Database database);
+
     @Input
     @Optional
     public abstract Property<String> getDbschema();
@@ -82,11 +94,11 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
 
     @InputFile
     @Optional
-    public abstract Property<RegularFile> getPreScript();
+    public abstract RegularFileProperty getPreScript();
     
     @InputFile
     @Optional
-    public abstract Property<RegularFile> getPostScript();
+    public abstract RegularFileProperty getPostScript();
     
     public Property<Boolean> deleteData = getProject().getObjects().property(Boolean.class).convention(false);
     
@@ -110,7 +122,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
 
     @InputFile
     @Optional
-    public abstract Property<RegularFile> getValidConfigFile();
+    public abstract RegularFileProperty getValidConfigFile();
 
     public Property<Boolean> disableValidation = getProject().getObjects().property(Boolean.class).convention(false);
 
@@ -184,14 +196,14 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         return failOnException;
     }
 
-    @Input
-    @Optional
-    public abstract Property<Range<Integer>> getDatasetSubstring();
+//    @Input
+//    @Optional
+//    public abstract Property<Range<Integer>> getDatasetSubstring();
     
     protected void run(int function, Config settings) {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
 
-        if (!getDatabase().isPresent()) {
+        if (getDatabase() == null) {
             throw new IllegalArgumentException("database must not be null");
         }
         
@@ -266,6 +278,9 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
             settings.setDisableRounding(true);;
         }        
 
+        System.out.println(getDatabase());
+        
+        /*
         Connector database = getDatabase().get();
         try {
             java.sql.Connection conn = getDatabase().get().connect();
@@ -304,6 +319,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 }
             }
         }
+        */
     }
 
     protected Config createConfig() {

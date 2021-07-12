@@ -24,11 +24,13 @@ apply plugin: "ch.so.agi.gretl-ng"
 
 
 import ch.so.agi.gretl.tasks.*
+import ch.so.agi.gretl.api.*
 
 
 def foo = 'a'
 
 def property = objects.property(String)
+def dbProperty = objects.property(Connector)
 //property.set("arsch")
 
 tasks.register('fubar') {
@@ -63,4 +65,19 @@ tasks.register('validateData', IliValidator) {
     //greeting = foo
     //modeldir = foo
     //dummy.set(property)
+}
+
+tasks.register('importData', Ili2pgImport) {
+    //database.set(["jdbc:postgresql://localhost:54321/edit", "gretl", "gretl"])
+    database =  {
+      uri = "jdbc:postgresql://localhost:54321/edit"
+    }
+
+    //resource  {
+    //    hostName = "foo"
+    //    path = "bar"
+    //}
+    models = "DM01AVSO24LV95"
+    dataFile = "/Users/stefan/Downloads/254900.itf"
+    disableValidation = true
 }
