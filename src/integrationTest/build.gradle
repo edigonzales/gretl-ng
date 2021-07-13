@@ -69,9 +69,10 @@ tasks.register('validateData', IliValidator) {
 
 tasks.register('importData', Ili2pgImport) {
     //database.set(["jdbc:postgresql://localhost:54321/edit", "gretl", "gretl"])
-    database =  {
-      uri = "jdbc:postgresql://localhost:54321/edit"
-    }
+    database.uri="jdbc:postgresql://localhost:54321/edit"
+
+    database.user="gretl"
+    //database = "foo"
 
     //resource  {
     //    hostName = "foo"

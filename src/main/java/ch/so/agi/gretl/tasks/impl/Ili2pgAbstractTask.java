@@ -203,9 +203,9 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected void run(int function, Config settings) {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
 
-        if (getDatabase() == null) {
-            throw new IllegalArgumentException("database must not be null");
-        }
+//        if (getDatabase() == null) {
+//            throw new IllegalArgumentException("database must not be null");
+//        }
         
         settings.setFunction(function);
 
@@ -277,8 +277,6 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         if (disableRounding.get()) {
             settings.setDisableRounding(true);;
         }        
-
-        System.out.println(getDatabase());
         
         /*
         Connector database = getDatabase().get();
