@@ -22,3 +22,4 @@ gradle fubar validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G
   * Anderes Logoutput-Verhalten mit `--no-daemon`. Hier dünkt es mich i.O. Ohne `--no-daemon` erscheint mit `-i` alles doppelt. Anderereits scheint es mir sehr unlogisch, das `--no-daemon` im Prinzip nur den Daemon anschliessend wieder killt (aber trotzdem ein Daemon startet)
 - ili2pg
   * Import: Falls kein Dataset-Support, muss dokumentiert werden, dass Properties ignoriert werden.
+  * Spezialfall ili2dbexception dokumentieren. Warum?

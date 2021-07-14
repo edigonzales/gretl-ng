@@ -4,7 +4,7 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 
-public abstract class Database {
+public interface Database {
     @Input
     public abstract Property<String> getUri();
     

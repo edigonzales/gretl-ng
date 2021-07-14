@@ -25,19 +25,9 @@ import org.gradle.api.tasks.TaskAction;
 public abstract class Ili2pgImport extends Ili2pgAbstractTask {
     @InputFile
     public abstract Property<Object> getDataFile();
-    
-//    @Nested
-//    public abstract Resource getResource(); 
-
-    
 
     @TaskAction
     public void importData() {
-        
-        
-        System.out.println(getDatabase().getUri().get());
-        System.out.println(getDatabase());
-        
         Config settings = createConfig();
         int function = Config.FC_IMPORT;
         
@@ -84,16 +74,6 @@ public abstract class Ili2pgImport extends Ili2pgAbstractTask {
             }
         }
     }
-
-    /*
-    public abstract class Resource {
-        @Input
-        public abstract Property<String> getHostName();
-        @Input
-        public abstract Property<String> getPath();
-    }
-    */
-
 }
 
 

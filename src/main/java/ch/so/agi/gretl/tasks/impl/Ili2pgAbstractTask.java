@@ -11,6 +11,7 @@ import ch.so.agi.gretl.tasks.Database;
 import ch.so.agi.gretl.util.TaskUtil;
 import groovy.lang.Range;
 
+import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.RegularFile;
@@ -25,6 +26,7 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskExecutionException;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,18 +34,9 @@ import java.util.List;
 public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected GretlLogger log;
 
-//    @Input
-//    public abstract ListProperty<String> getDatabase();
-//    @Input
-//    public abstract Property<Connector> getDatabase();
-//    @Nested
-//    public Database database;
-    
     @Nested
     public abstract Database getDatabase();
-
-//    public abstract void setDatabase(Database database);
-
+    
     @Input
     @Optional
     public abstract Property<String> getDbschema();
@@ -203,9 +196,9 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected void run(int function, Config settings) {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
 
-//        if (getDatabase() == null) {
-//            throw new IllegalArgumentException("database must not be null");
-//        }
+        if (getDatabase() == null) {
+            throw new IllegalArgumentException("database must not be null");
+        }
         
         settings.setFunction(function);
 
@@ -278,10 +271,12 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
             settings.setDisableRounding(true);;
         }        
         
-        /*
-        Connector database = getDatabase().get();
+        
+        Connector database = new Connector(getDatabase().getUri().getOrNull(), 
+                getDatabase().getUser().getOrNull(), 
+                getDatabase().getPassword().getOrNull());
         try {
-            java.sql.Connection conn = getDatabase().get().connect();
+            Connection conn = database.connect();
             if (conn == null) {
                 throw new IllegalArgumentException("connection must not be null");
             }
@@ -296,11 +291,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 log.lifecycle(e.getMessage());
                 return;
             }
-
             log.error("failed to run ili2pg", e);
-
-//            GradleException ge = TaskUtil.toGradleException(e);
-//            throw ge;
             throw new TaskExecutionException(this, e);
         } finally {
             if (!database.isClosed()) {
@@ -317,7 +308,11 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 }
             }
         }
-        */
+        
+    }
+    
+    public void database(Action<Database> configAction) {
+        configAction.execute(getDatabase());
     }
 
     protected Config createConfig() {
