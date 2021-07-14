@@ -161,10 +161,8 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected void run(int function, Config settings) {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
 
-        if (getDatabase() == null) {
-            if (!(function == Config.FC_SCHEMAIMPORT && settings.getCreatescript() != null)) {
-                throw new IllegalArgumentException("database must not be null");
-            }
+        if (getDatabase() == null && function != Config.FC_SCRIPT) {
+            throw new IllegalArgumentException("database must not be null");        
         }
 
         settings.setFunction(function);
@@ -238,38 +236,47 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
             settings.setDisableRounding(true);;
         }        
         
-        Connector database = new Connector(getDatabase().getUri().getOrNull(), 
-                getDatabase().getUser().getOrNull(), 
-                getDatabase().getPassword().getOrNull());
-        try {
-            Connection conn = database.connect();
-            if (conn == null) {
-                throw new IllegalArgumentException("connection must not be null");
+        if (function == Config.FC_SCRIPT) {
+            try {
+                Ili2db.run(settings, null);
+            } catch (Ili2dbException e) {
+                log.error(e.getMessage(), e);
+                throw new TaskExecutionException(this, e);
             }
-            settings.setJdbcConnection(conn);
-            Ili2db.readSettingsFromDb(settings);
-            Ili2db.run(settings, null);
-            conn.commit();
-            database.close();
-        } catch (Exception e) {
-            // TODO: Spezialfall dokumentieren!
-            if (e instanceof Ili2dbException && !failOnException.get()) {
-                log.lifecycle(e.getMessage());
-                return;
-            }
-            log.error("failed to run ili2pg", e);
-            throw new TaskExecutionException(this, e);
-        } finally {
-            if (!database.isClosed()) {
-                try {
-                    database.connect().rollback();
-                } catch (SQLException e) {
-                    log.error("failed to rollback", e);
-                } finally {
+        } else {
+            Connector database = new Connector(getDatabase().getUri().getOrNull(), 
+                    getDatabase().getUser().getOrNull(), 
+                    getDatabase().getPassword().getOrNull());
+            try {
+                Connection conn = database.connect();
+                if (conn == null) {
+                    throw new IllegalArgumentException("connection must not be null");
+                }
+                settings.setJdbcConnection(conn);
+                Ili2db.readSettingsFromDb(settings);
+                Ili2db.run(settings, null);
+                conn.commit();
+                database.close();
+            } catch (Exception e) {
+                // TODO: Spezialfall dokumentieren!
+                if (e instanceof Ili2dbException && !failOnException.get()) {
+                    log.lifecycle(e.getMessage());
+                    return;
+                }
+                log.error("failed to run ili2pg", e);
+                throw new TaskExecutionException(this, e);
+            } finally {
+                if (!database.isClosed()) {
                     try {
-                        database.close();
+                        database.connect().rollback();
                     } catch (SQLException e) {
-                        log.error("failed to close", e);
+                        log.error("failed to rollback", e);
+                    } finally {
+                        try {
+                            database.close();
+                        } catch (SQLException e) {
+                            log.error("failed to close", e);
+                        }
                     }
                 }
             }

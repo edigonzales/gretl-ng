@@ -128,5 +128,5 @@ tasks.register('createSchema', Ili2pgImportSchema) {
     createBasketCol = true
     createDatasetCol = true
     createImportTabs = true
-    createscript = file("/User/stefan/Downloads/fubar.sql")
+    createscript = file("/Users/stefan/Downloads/fubar.sql")
 }
