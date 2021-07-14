@@ -8,6 +8,7 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.interlis2.validator.Validator;
@@ -16,54 +17,46 @@ public abstract class AbstractValidatorTask extends DefaultTask {
     @InputFiles
     public abstract Property<Object> getDataFiles();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getModels();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getModeldir();
     
-    @InputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getConfigFile();
     
     public Property<Boolean> forceTypeValidation = getProject().getObjects().property(Boolean.class).convention(false); 
     
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getForceTypeValidation() {
         return forceTypeValidation;
     }
 
     public Property<Boolean> disableAreaValidation = getProject().getObjects().property(Boolean.class).convention(false); 
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getDisableAreaValidation() {
         return disableAreaValidation;
     }
 
     public Property<Boolean> multiplicityOff = getProject().getObjects().property(Boolean.class).convention(false); 
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getMultiplicityOff() {
         return multiplicityOff;
     }
     
     public Property<Boolean> allObjectsAccessible = getProject().getObjects().property(Boolean.class).convention(false); 
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getAllObjectsAccessible() {
         return allObjectsAccessible;
     }
     
     public Property<Boolean> skipPolygonBuilding = getProject().getObjects().property(Boolean.class).convention(false); 
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getSkipPolygonBuilding() {
         return skipPolygonBuilding;
     }
@@ -76,22 +69,18 @@ public abstract class AbstractValidatorTask extends DefaultTask {
     @Optional
     public abstract RegularFileProperty getXtfLogFile();
 
-//    @InputDirectory
-//    @Optional
+//    @Internal
 //    public Object pluginFolder = null;
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getProxy();
 
-    @Input
-    @Optional
+    @Internal
     public abstract Property<Integer> getProxyPort();
     
     public Property<Boolean> failOnError = getProject().getObjects().property(Boolean.class).convention(true); 
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getFailOnError() {
         return failOnError;
     }
