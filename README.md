@@ -24,3 +24,9 @@ gradle fubar validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G
   * DatasetSubstring: hat nur Auswirkung, falls FileTree verwendet wird. Ansonsten wird angenommen, dass die korrekten Datasetnamen verwendet werden.
   * Spezialfall ili2dbexception dokumentieren. Warum?
   * Locale.setDefault(new Locale("de_CH")); Ist das nur ein ili1-Problem? Nur ein macOS-Problem? Kommt mir irgendwie bekannt vor.
+
+- devdoc:
+  * https://docs.gradle.org/current/userguide/implementing_gradle_plugins.html
+  * https://docs.gradle.org/current/userguide/lazy_configuration.html#lazy_configuration_reference
+  * https://docs.gradle.org/current/userguide/custom_tasks.html
+  * https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks
