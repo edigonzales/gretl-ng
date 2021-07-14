@@ -80,6 +80,24 @@ tasks.register('importData', Ili2pgImport) {
     //datasetSubstring = 0..4
 }
 
+tasks.register('replaceData', Ili2pgReplace) {
+    database {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    dbschema = "agi_dm01avso24"
+    models = "DM01AVSO24LV95"
+    dataFile = "/Users/stefan/Downloads/252400.itf"
+    dataFile = fileTree("/Users/stefan/Downloads/itf/.").matching {
+        include "*.itf"
+    }
+
+    dataset = dataFile
+    disableValidation = true
+    datasetSubstring = 0..4
+}
+
 tasks.register('exportData', Ili2pgExport) {  
     database {
         uri = "jdbc:postgresql://localhost:54321/edit"

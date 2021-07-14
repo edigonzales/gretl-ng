@@ -50,109 +50,57 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     
     @Internal
     public abstract Property<String> getTopics();
+        
+    @Internal
+    public abstract Property<Boolean> getImportTid();
     
     @Internal
-    public Property<Boolean> importTid = getProject().getObjects().property(Boolean.class).convention(false);
-    
-    public Property<Boolean> getImportTid() {
-        return importTid;
-    }
-
-    public Property<Boolean> importBid = getProject().getObjects().property(Boolean.class).convention(false);
-    
-    @Internal
-    public Property<Boolean> getImportBid() {
-        return importBid;
-    }
+    public abstract Property<Boolean> getImportBid();
 
     @Internal
     public abstract RegularFileProperty getPreScript();
     
     @Internal
     public abstract RegularFileProperty getPostScript();
-    
-    public Property<Boolean> deleteData = getProject().getObjects().property(Boolean.class).convention(false);
-    
+        
     @Internal
-    public Property<Boolean> getDeleteData() {
-        return deleteData;
-    }
+    public abstract Property<Boolean> getDeleteData();
 
     @Internal
     public abstract RegularFileProperty getLogFile();
     
-    public Property<Boolean> trace = getProject().getObjects().property(Boolean.class).convention(false);
-
     @Internal
-    public Property<Boolean> getTrace() {
-        return trace;
-    }
+    public abstract Property<Boolean> getTrace();
 
     @Internal
     public abstract RegularFileProperty getValidConfigFile();
 
-    public Property<Boolean> disableValidation = getProject().getObjects().property(Boolean.class).convention(false);
+    @Internal
+    public abstract Property<Boolean> getDisableValidation();
 
     @Internal
-    public Property<Boolean> getDisableValidation() {
-        return disableValidation;
-    }
-
-    public Property<Boolean> disableAreaValidation = getProject().getObjects().property(Boolean.class).convention(false);
+    public abstract Property<Boolean> getDisableAreaValidation();
 
     @Internal
-    public Property<Boolean> getDisableAreaValidation() {
-        return disableAreaValidation;
-    }
-
-    public Property<Boolean> forceTypeValidation = getProject().getObjects().property(Boolean.class).convention(false);
+    public abstract Property<Boolean> getForceTypeValidation();
 
     @Internal
-    public Property<Boolean> getForceTypeValidation() {
-        return forceTypeValidation;
-    }
-
-    public Property<Boolean> strokeArcs = getProject().getObjects().property(Boolean.class).convention(false);
+    public abstract Property<Boolean> getStrokeArcs();
 
     @Internal
-    public Property<Boolean> getStrokeArcs() {
-        return strokeArcs;
-    }
-
-    public Property<Boolean> skipPolygonBuilding = getProject().getObjects().property(Boolean.class).convention(false);
-
-    @Internal
-    public Property<Boolean> getSkipPolygonBuilding() {
-        return skipPolygonBuilding;
-    }
-    
-    public Property<Boolean> skipGeometryErrors = getProject().getObjects().property(Boolean.class).convention(false);
-
-    @Internal
-    public Property<Boolean> getSkipGeometryErrors() {
-        return skipGeometryErrors;
-    }
-
-    public Property<Boolean> iligml20 = getProject().getObjects().property(Boolean.class).convention(false);
-
-    @Internal
-    public Property<Boolean> getIligml20() {
-        return iligml20;
-    }
-
-    public Property<Boolean> disableRounding = getProject().getObjects().property(Boolean.class).convention(false);
+    public abstract Property<Boolean> getSkipPolygonBuilding();
     
     @Internal
-    public Property<Boolean> getDisableRounding() {
-        return disableRounding;
-    }
+    public abstract Property<Boolean> getSkipGeometryErrors();
 
-    public Property<Boolean> failOnException = getProject().getObjects().property(Boolean.class).convention(true);
+    @Internal
+    public abstract Property<Boolean> getIligml20();
     
     @Internal
-    public Property<Boolean> getFailOnException() {
-        return failOnException;
-    }
+    public abstract Property<Boolean> getDisableRounding();
+    
+    @Internal
+    public abstract Property<Boolean> getFailOnException();
 
     // see: https://discuss.gradle.org/t/proper-way-of-using-a-range-property/40478
     @Internal
@@ -188,8 +136,11 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         if (getTopics().isPresent()) {
             settings.setTopics(getTopics().get());
         }
-        if (importTid.get()) {
+        if (getImportTid().isPresent() && getImportTid().get()) {
             settings.setImportTid(true);
+        }
+        if (getImportBid().isPresent() && getImportBid().get()) {
+            settings.setImportBid(true);
         }
         if (getPreScript().isPresent()) {
             settings.setPreScript(getPreScript().get().getAsFile().getAbsolutePath());
@@ -197,7 +148,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         if (getPostScript().isPresent()) {
             settings.setPreScript(getPostScript().get().getAsFile().getAbsolutePath());
         }
-        if (deleteData.get()) {
+        if (getDeleteData().isPresent() && getDeleteData().get()) {
             settings.setDeleteMode(Config.DELETE_DATA);
         }
         if(function!=Config.FC_IMPORT && function!=Config.FC_UPDATE && function!=Config.FC_REPLACE) {
@@ -205,34 +156,34 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 settings.setLogfile(getLogFile().get().getAsFile().getAbsolutePath());
             }
         }
-        if (trace.get()) {
+        if (getTrace().isPresent() && getTrace().get()) {
             EhiLogger.getInstance().setTraceFilter(false);
         }
         if (getValidConfigFile().isPresent()) {
             settings.setValidConfigFile(getValidConfigFile().get().getAsFile().getAbsolutePath());
         }
-        if (disableValidation.get()) {
+        if (getDisableValidation().isPresent() && getDisableValidation().get()) {
             settings.setValidation(false);
         }
-        if (disableAreaValidation.get()) {
+        if (getDisableAreaValidation().isPresent() && getDisableAreaValidation().get()) {
             settings.setDisableAreaValidation(true);
         }
-        if (forceTypeValidation.get()) {
+        if (getForceTypeValidation().isPresent() && getForceTypeValidation().get()) {
             settings.setOnlyMultiplicityReduction(true);
         }
-        if (strokeArcs.get()) {
+        if (getStrokeArcs().isPresent() && getStrokeArcs().get()) {
             Config.setStrokeArcs(settings, Config.STROKE_ARCS_ENABLE);
         }
-        if (skipPolygonBuilding.get()) {
+        if (getSkipPolygonBuilding().isPresent() && getSkipPolygonBuilding().get()) {
             Ili2db.setSkipPolygonBuilding(settings);
         }
-        if (skipGeometryErrors.get()) {
+        if (getSkipGeometryErrors().isPresent() && getSkipGeometryErrors().get()) {
             settings.setSkipGeometryErrors(true);
         }
-        if (iligml20.get()) {
+        if (getIligml20().isPresent() && getIligml20().get()) {
             settings.setTransferFileFormat(Config.ILIGML20);
         }
-        if (disableRounding.get()) {
+        if (getDisableRounding().isPresent() && getDisableRounding().get()) {
             settings.setDisableRounding(true);;
         }        
         
@@ -259,7 +210,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 database.close();
             } catch (Exception e) {
                 // TODO: Spezialfall dokumentieren!
-                if (e instanceof Ili2dbException && !failOnException.get()) {
+                if (e instanceof Ili2dbException && !getFailOnException().get()) {
                     log.lifecycle(e.getMessage());
                     return;
                 }

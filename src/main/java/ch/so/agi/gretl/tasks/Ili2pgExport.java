@@ -19,20 +19,12 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 
 public abstract class Ili2pgExport extends Ili2pgAbstractTask {
-    
-    public Property<Boolean> export3 = getProject().getObjects().property(Boolean.class).convention(false);
-    
+        
     @Internal
-    public Property<Boolean> getExport3() {
-        return export3;
-    }
-    
-    public Property<Boolean> exportTid = getProject().getObjects().property(Boolean.class).convention(false);
-    
+    public abstract Property<Boolean> getExport3();
+        
     @Internal
-    public Property<Boolean> getExportTid() {
-        return exportTid;
-    }
+    public abstract Property<Boolean> getExportTid();
 
     @Internal
     public abstract Property<Object> getDataFile();
@@ -47,8 +39,11 @@ public abstract class Ili2pgExport extends Ili2pgAbstractTask {
         if (!getDataFile().isPresent()) {
             return;
         }
-        if (export3.get()) {
+        if (getExport3().isPresent() && getExport3().get()) {
             settings.setVer3_export(true);
+        }
+        if (getExportTid().isPresent() && getExportTid().get()) {
+            settings.setExportTid(true);
         }
         FileCollection dataFilesCollection = null;
         if(getDataFile().get() instanceof FileCollection) {

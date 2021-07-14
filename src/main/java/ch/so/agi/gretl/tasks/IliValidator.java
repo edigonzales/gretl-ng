@@ -47,7 +47,7 @@ public abstract class IliValidator extends AbstractValidatorTask {
         initSettings(settings);
 
         validationOk = new Validator().validate(files.toArray(new String[files.size()]), settings);
-        if (!validationOk && failOnError.get()) {
+        if (!validationOk && getFailOnError().get()) {
             throw new TaskExecutionException(this, new Exception("validation failed"));
         }        
     }

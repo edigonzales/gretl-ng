@@ -25,41 +25,21 @@ public abstract class AbstractValidatorTask extends DefaultTask {
     
     @Internal
     public abstract RegularFileProperty getConfigFile();
+        
+    @Internal
+    public abstract Property<Boolean> getForceTypeValidation();
+
+    @Internal
+    public abstract Property<Boolean> getDisableAreaValidation();
+
+    @Internal
+    public abstract Property<Boolean> getMultiplicityOff();
     
-    public Property<Boolean> forceTypeValidation = getProject().getObjects().property(Boolean.class).convention(false); 
+    @Internal
+    public abstract Property<Boolean> getAllObjectsAccessible();
     
     @Internal
-    public Property<Boolean> getForceTypeValidation() {
-        return forceTypeValidation;
-    }
-
-    public Property<Boolean> disableAreaValidation = getProject().getObjects().property(Boolean.class).convention(false); 
-
-    @Internal
-    public Property<Boolean> getDisableAreaValidation() {
-        return disableAreaValidation;
-    }
-
-    public Property<Boolean> multiplicityOff = getProject().getObjects().property(Boolean.class).convention(false); 
-
-    @Internal
-    public Property<Boolean> getMultiplicityOff() {
-        return multiplicityOff;
-    }
-    
-    public Property<Boolean> allObjectsAccessible = getProject().getObjects().property(Boolean.class).convention(false); 
-
-    @Internal
-    public Property<Boolean> getAllObjectsAccessible() {
-        return allObjectsAccessible;
-    }
-    
-    public Property<Boolean> skipPolygonBuilding = getProject().getObjects().property(Boolean.class).convention(false); 
-
-    @Internal
-    public Property<Boolean> getSkipPolygonBuilding() {
-        return skipPolygonBuilding;
-    }
+    public abstract Property<Boolean> getSkipPolygonBuilding();
 
     @Internal
     public abstract RegularFileProperty getLogFile();
@@ -76,12 +56,8 @@ public abstract class AbstractValidatorTask extends DefaultTask {
     @Internal
     public abstract Property<Integer> getProxyPort();
     
-    public Property<Boolean> failOnError = getProject().getObjects().property(Boolean.class).convention(true); 
-
     @Internal
-    public Property<Boolean> getFailOnError() {
-        return failOnError;
-    }
+    public abstract Property<Boolean> getFailOnError();
 
     protected boolean validationOk = true;
 
@@ -96,20 +72,20 @@ public abstract class AbstractValidatorTask extends DefaultTask {
         if (getConfigFile().isPresent()) {
             settings.setValue(Validator.SETTING_CONFIGFILE, getConfigFile().get().getAsFile().getAbsolutePath());
         }
-        if (forceTypeValidation.get()) {
+        if (getForceTypeValidation().isPresent() && getForceTypeValidation().get()) {
             settings.setValue(Validator.SETTING_FORCE_TYPE_VALIDATION, Validator.TRUE);
         }
-        if (disableAreaValidation.get()) {
+        if (getDisableAreaValidation().isPresent() && getDisableAreaValidation().get()) {
             settings.setValue(Validator.SETTING_DISABLE_AREA_VALIDATION, Validator.TRUE);
         }
-        if (multiplicityOff.get()) {
+        if (getMultiplicityOff().isPresent() && getMultiplicityOff().get()) {
             settings.setValue(Validator.SETTING_MULTIPLICITY_VALIDATION,
                     ch.interlis.iox_j.validator.ValidationConfig.OFF);
         }
-        if (allObjectsAccessible.get()) {
+        if (getAllObjectsAccessible().isPresent() && getAllObjectsAccessible().get()) {
             settings.setValue(Validator.SETTING_ALL_OBJECTS_ACCESSIBLE, Validator.TRUE);
         }
-        if (skipPolygonBuilding.get()) {
+        if (getSkipPolygonBuilding().isPresent() && getSkipPolygonBuilding().get()) {
             settings.setValue(ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_LINETABLES,
                     ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_LINETABLES_DO);
         }
