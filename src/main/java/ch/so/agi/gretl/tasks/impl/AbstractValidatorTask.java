@@ -61,12 +61,10 @@ public abstract class AbstractValidatorTask extends DefaultTask {
         return skipPolygonBuilding;
     }
 
-    @OutputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getLogFile();
     
-    @OutputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getXtfLogFile();
 
 //    @Internal
