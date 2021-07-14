@@ -82,7 +82,7 @@ tasks.register('importData', Ili2pgImport) {
     //    include "*.itf"
     //}
 
-    //dataset = "2524"
+    dataset = "2524"
     disableValidation = true
     //datasetSubstring = objects.listProperty(Range).set(0..4)
     //datasetSubstring = 0..4
@@ -99,4 +99,16 @@ tasks.register('exportData', Ili2pgExport) {
     dataFile = "/Users/stefan/Downloads/252400_export.itf"
     //dataset = "2524"
     disableValidation = true
+}
+
+tasks.register('deleteData', Ili2pgDelete) {  
+    database {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    dbschema = "agi_dm01avso24"
+    models = "DM01AVSO24LV95"
+    dataset = "2524"
+    failOnException = false
 }
