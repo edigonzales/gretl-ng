@@ -59,13 +59,13 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = 'https://github.com/sogis/gretl' 
-    vcsUrl = 'https://github.com/sogis/gretl.git' 
+    website = 'https://github.com/edigonzales/gretl-ng' 
+    vcsUrl = 'https://github.com/edigonzales/gretl-ng.git' 
     tags = ['etl', 'gis', 'sdi', 'geo', 'geoinformation', 'interlis', 'geopackage', 'shapefile', 'csv', 'database', 'postgresql', 'sqlite', 'ili2pg', 'ilivalidator'] 
     
     plugins { 
         gretlPlugin {  
-            displayName = 'GRETL' 
+            displayName = 'GRETL-ng' 
             description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
         }
     }
