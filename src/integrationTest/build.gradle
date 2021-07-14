@@ -54,17 +54,9 @@ tasks.register('validateData', IliValidator) {
     models = "DM01AVSO24LV95"
     //dataFiles = ["/Users/stefan/Downloads/254900.itf"]
     //logFile = file("/Users/stefan/Downloads/ilivalidator.log")
-
-
-    
     dataFiles = fileTree("/Users/stefan/Downloads/").matching {
-    	include"*.itf"
+    	include "*.itf"
     }
-    
-    
-    //greeting = foo
-    //modeldir = foo
-    //dummy.set(property)
 }
 
 tasks.register('importData', Ili2pgImport) {
@@ -111,4 +103,30 @@ tasks.register('deleteData', Ili2pgDelete) {
     models = "DM01AVSO24LV95"
     dataset = "2524"
     failOnException = false
+}
+
+tasks.register('createSchema', Ili2pgImportSchema) {  
+    /*
+    database {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    */
+
+    dbschema = "agi_dm01avso24"
+    models = "DM01AVSO24LV95"
+    defaultSrsCode = "2056"
+    createGeomIdx = true
+    createFkIdx = true
+    createEnumTabs = true
+    beautifyEnumDispName = true
+    createMetaInfo = true
+    createNumChecks = true
+    nameByTopic = true
+    strokeArcs = true
+    createBasketCol = true
+    createDatasetCol = true
+    createImportTabs = true
+    createscript = file("/User/stefan/Downloads/fubar.sql")
 }

@@ -14,12 +14,8 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Nested;
-import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskExecutionException;
 
 import java.sql.Connection;
@@ -166,7 +162,9 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
 
         if (getDatabase() == null) {
-            throw new IllegalArgumentException("database must not be null");
+            if (!(function == Config.FC_SCHEMAIMPORT && settings.getCreatescript() != null)) {
+                throw new IllegalArgumentException("database must not be null");
+            }
         }
 
         settings.setFunction(function);

@@ -26,6 +26,13 @@ public abstract class Ili2pgExport extends Ili2pgAbstractTask {
     public Property<Boolean> getExport3() {
         return export3;
     }
+    
+    public Property<Boolean> exportTid = getProject().getObjects().property(Boolean.class).convention(false);
+    
+    @Internal
+    public Property<Boolean> getExportTid() {
+        return exportTid;
+    }
 
     @Internal
     public abstract Property<Object> getDataFile();
@@ -63,7 +70,7 @@ public abstract class Ili2pgExport extends Ili2pgAbstractTask {
                 datasetNames = new ArrayList<String>();
                 datasetNames.add((String)getDataset().get());
             } else {
-                datasetNames=(List)getDataset().get();
+                datasetNames = (List)getDataset().get();
             }
             if (files.size() != datasetNames.size()) {
                 throw new GradleException("number of dataset names ("+datasetNames.size()+") doesn't match number of files ("+files.size()+")");

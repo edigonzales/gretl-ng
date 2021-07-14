@@ -82,8 +82,8 @@ public abstract class Ili2pgImport extends Ili2pgAbstractTask {
         ch.ehi.basics.logging.FileListener fileLogger=null;
         if (getLogFile().isPresent()) {
             // setup logger here, so that multiple file imports result in one logfile
-            File logFilepath=this.getProject().file(getLogFile().get().getAsFile());
-            fileLogger=new FileLogger(logFilepath);
+            File logFilepath = getLogFile().get().getAsFile();
+            fileLogger = new FileLogger(logFilepath);
             EhiLogger.getInstance().addListener(fileLogger);
         }
         try {
