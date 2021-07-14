@@ -8,8 +8,6 @@ import java.io.File;
 
 /**
  * Utility class with methods used in the steps and tasks.
- * @author agi.so.ch
- * @since 1.0.0
  */
 public class TaskUtil {
 
