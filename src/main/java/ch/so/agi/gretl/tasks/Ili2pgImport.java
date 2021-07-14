@@ -15,11 +15,11 @@ import org.gradle.api.GradleException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.TaskAction;
 
 public abstract class Ili2pgImport extends Ili2pgAbstractTask {
-    @InputFile
+    @InputFiles
     public abstract Property<Object> getDataFile();
 
     @TaskAction
@@ -38,7 +38,7 @@ public abstract class Ili2pgImport extends Ili2pgAbstractTask {
             return;
         }
         List<String> files = new ArrayList<String>();
-        for (java.io.File fileObj : dataFilesCollection) {
+        for (File fileObj : dataFilesCollection) {
             String fileName = fileObj.getPath();
             files.add(fileName);
         }
@@ -62,7 +62,7 @@ public abstract class Ili2pgImport extends Ili2pgAbstractTask {
                     }
                 }
             } else {
-                datasetNames=new ArrayList<String>();
+                datasetNames = new ArrayList<String>();
                 if (getDatasetSubstring().isPresent()) {
                     List<String> fileNames = (List)getDataset().get();
                     for (String fileName : fileNames) {
@@ -74,7 +74,7 @@ public abstract class Ili2pgImport extends Ili2pgAbstractTask {
                     datasetNames = (List)getDataset().get();
                 }
             }
-            if(getDataset().isPresent() && files.size() != datasetNames.size()) {
+            if(files.size() != datasetNames.size()) {
                 throw new GradleException("number of dataset names ("+datasetNames.size()+") doesn't match number of files ("+files.size()+")");
             }
         }

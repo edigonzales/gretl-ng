@@ -52,15 +52,15 @@ task importData() {
 
 tasks.register('validateData', IliValidator) {
     models = "DM01AVSO24LV95"
-    dataFiles = ["/Users/stefan/Downloads/254900.itf"]
+    //dataFiles = ["/Users/stefan/Downloads/254900.itf"]
     //logFile = file("/Users/stefan/Downloads/ilivalidator.log")
 
 
-    /*
+    
     dataFiles = fileTree("/Users/stefan/Downloads/").matching {
     	include"*.itf"
     }
-    */
+    
     
     //greeting = foo
     //modeldir = foo
@@ -78,8 +78,25 @@ tasks.register('importData', Ili2pgImport) {
     dbschema = "agi_dm01avso24"
     models = "DM01AVSO24LV95"
     dataFile = "/Users/stefan/Downloads/252400.itf"
-    dataset = "2524"
+    //dataFile = fileTree("/Users/stefan/Downloads/itf/.").matching {
+    //    include "*.itf"
+    //}
+
+    //dataset = "2524"
     disableValidation = true
     //datasetSubstring = objects.listProperty(Range).set(0..4)
     //datasetSubstring = 0..4
+}
+
+tasks.register('exportData', Ili2pgExport) {  
+    database {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    dbschema = "agi_dm01avso24"
+    models = "DM01AVSO24LV95"
+    dataFile = "/Users/stefan/Downloads/252400_export.itf"
+    //dataset = "2524"
+    disableValidation = true
 }

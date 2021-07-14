@@ -16,6 +16,7 @@ import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
@@ -30,40 +31,31 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     @Nested
     public abstract Database getDatabase();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getDbschema();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getProxy();
 
-    @Input
-    @Optional
+    @Internal
     public abstract Property<Integer> getProxyPort();
         
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getModels();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getModeldir();
 
-    @Input
-    @Optional
+    @Internal
     public abstract Property<Object> getDataset();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getBaskets();
     
-    @Input
-    @Optional
+    @Internal
     public abstract Property<String> getTopics();
     
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> importTid = getProject().getObjects().property(Boolean.class).convention(false);
     
     public Property<Boolean> getImportTid() {
@@ -72,119 +64,102 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
 
     public Property<Boolean> importBid = getProject().getObjects().property(Boolean.class).convention(false);
     
-    @Input
-    @Optional    
+    @Internal
     public Property<Boolean> getImportBid() {
         return importBid;
     }
 
-    @InputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getPreScript();
     
-    @InputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getPostScript();
     
     public Property<Boolean> deleteData = getProject().getObjects().property(Boolean.class).convention(false);
     
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getDeleteData() {
         return deleteData;
     }
 
-    @OutputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getLogFile();
     
     public Property<Boolean> trace = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getTrace() {
         return trace;
     }
 
-    @InputFile
-    @Optional
+    @Internal
     public abstract RegularFileProperty getValidConfigFile();
 
     public Property<Boolean> disableValidation = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getDisableValidation() {
         return disableValidation;
     }
 
     public Property<Boolean> disableAreaValidation = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getDisableAreaValidation() {
         return disableAreaValidation;
     }
 
     public Property<Boolean> forceTypeValidation = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getForceTypeValidation() {
         return forceTypeValidation;
     }
 
     public Property<Boolean> strokeArcs = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getStrokeArcs() {
         return strokeArcs;
     }
 
     public Property<Boolean> skipPolygonBuilding = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getSkipPolygonBuilding() {
         return skipPolygonBuilding;
     }
     
     public Property<Boolean> skipGeometryErrors = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getSkipGeometryErrors() {
         return skipGeometryErrors;
     }
 
     public Property<Boolean> iligml20 = getProject().getObjects().property(Boolean.class).convention(false);
 
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getIligml20() {
         return iligml20;
     }
 
     public Property<Boolean> disableRounding = getProject().getObjects().property(Boolean.class).convention(false);
     
-    @Input
-    @Optional    
+    @Internal
     public Property<Boolean> getDisableRounding() {
         return disableRounding;
     }
 
     public Property<Boolean> failOnException = getProject().getObjects().property(Boolean.class).convention(true);
     
-    @Input
-    @Optional
+    @Internal
     public Property<Boolean> getFailOnException() {
         return failOnException;
     }
 
     // see: https://discuss.gradle.org/t/proper-way-of-using-a-range-property/40478
-    @Input
-    @Optional
+    @Internal
     public abstract ListProperty<Integer> getDatasetSubstring();
     
     protected void run(int function, Config settings) {
