@@ -32,3 +32,4 @@ gradle fubar validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G
   * https://docs.gradle.org/current/userguide/lazy_configuration.html#lazy_configuration_reference
   * https://docs.gradle.org/current/userguide/custom_tasks.html
   * https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks
+  * https://docs.gradle.org/current/userguide/custom_gradle_types.html
