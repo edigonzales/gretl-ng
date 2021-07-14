@@ -8,13 +8,9 @@ import ch.so.agi.gretl.api.Connector;
 import ch.so.agi.gretl.logging.GretlLogger;
 import ch.so.agi.gretl.logging.LogEnvironment;
 import ch.so.agi.gretl.tasks.Database;
-import ch.so.agi.gretl.util.TaskUtil;
-import groovy.lang.Range;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.GradleException;
-import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
@@ -25,11 +21,8 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskExecutionException;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Ili2pgAbstractTask extends DefaultTask {
     protected GretlLogger log;
@@ -48,7 +41,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
     @Input
     @Optional
     public abstract Property<Integer> getProxyPort();
-    
+        
     @Input
     @Optional
     public abstract Property<String> getModels();
@@ -189,9 +182,10 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         return failOnException;
     }
 
-//    @Input
-//    @Optional
-//    public abstract Property<Range<Integer>> getDatasetSubstring();
+    // see: https://discuss.gradle.org/t/proper-way-of-using-a-range-property/40478
+    @Input
+    @Optional
+    public abstract ListProperty<Integer> getDatasetSubstring();
     
     protected void run(int function, Config settings) {
         log = LogEnvironment.getLogger(Ili2pgAbstractTask.class);
@@ -199,7 +193,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
         if (getDatabase() == null) {
             throw new IllegalArgumentException("database must not be null");
         }
-        
+
         settings.setFunction(function);
 
         if (getProxy().isPresent()) {
@@ -271,7 +265,6 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
             settings.setDisableRounding(true);;
         }        
         
-        
         Connector database = new Connector(getDatabase().getUri().getOrNull(), 
                 getDatabase().getUser().getOrNull(), 
                 getDatabase().getPassword().getOrNull());
@@ -308,7 +301,6 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 }
             }
         }
-        
     }
     
     public void database(Action<Database> configAction) {

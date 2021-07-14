@@ -75,8 +75,11 @@ tasks.register('importData', Ili2pgImport) {
         user = "gretl"
         password = "gretl"
     }
-    dbschema="agi_dm01avso24"
+    dbschema = "agi_dm01avso24"
     models = "DM01AVSO24LV95"
     dataFile = "/Users/stefan/Downloads/252400.itf"
+    dataset = "2524"
     disableValidation = true
+    //datasetSubstring = objects.listProperty(Range).set(0..4)
+    //datasetSubstring = 0..4
 }
