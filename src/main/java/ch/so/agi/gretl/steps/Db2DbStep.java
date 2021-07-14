@@ -175,7 +175,7 @@ public class Db2DbStep {
     private int processTransferSet(Connection srcCon, Connection targetCon, TransferSet transferSet,
             Map<String, String> params)
             throws SQLException, IOException, EmptyFileException, NotAllowedSqlExpressionException {
-        if (transferSet.deleteAllRows()) {
+        if (transferSet.getDeleteAllRows()) {
             deleteDestTableContents(targetCon, transferSet.getOutputQualifiedTableName());
         }
         String selectStatement = extractSingleStatement(transferSet.getInputSqlFile(), params);

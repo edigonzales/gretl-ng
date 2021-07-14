@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.HashMap;
 
 public class TransferSet {
-
     private boolean deleteAllRows;
     private File inputSqlFile;
     private String outputQualifiedTableName;
@@ -15,7 +14,6 @@ public class TransferSet {
 
     public TransferSet(String inputSqlFilePath, String outputQualifiedSchemaAndTableName, boolean outputDeleteAllRows,
             String[] geoColumns) {
-
         if (inputSqlFilePath == null || inputSqlFilePath.length() == 0)
             throw new IllegalArgumentException("inputSqlFilePath must not be null or empty");
 
@@ -50,7 +48,7 @@ public class TransferSet {
         this(inputSqlFilePath, outputQualifiedSchemaAndTableName, outputDeleteAllRows, null);
     }
 
-    public boolean deleteAllRows() {
+    public boolean getDeleteAllRows() {
         return deleteAllRows;
     }
 
