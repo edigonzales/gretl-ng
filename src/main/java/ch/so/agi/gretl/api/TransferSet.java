@@ -6,12 +6,29 @@ import ch.so.agi.gretl.util.GretlException;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * A transferset is a container for the sql file containing the select statement 
+ * for the source database, the qualified table name for the targe database
+ * and a flag whether the target table should be emptied before the inserts. It 
+ * is also responsible for dealing with specific geometry column handling (aka 
+ * abstraction of the geometry columns by using wkb, wkt or geojson instead
+ * of the original database vendor geometry data type). 
+ */
 public class TransferSet {
     private boolean deleteAllRows;
     private File inputSqlFile;
     private String outputQualifiedTableName;
     private HashMap<String, GeometryTransform> geoColumns;
 
+    /**
+     * Constructor for a transfer set. It initializes the geometry columns by 
+     * creating a GeometryTransform object for each geometry column.
+     * 
+     * @param inputSqlFilePath                     the input sql file path
+     * @param outputQualifiedSchemaAndTableName    the qualified target table name
+     * @param outputDeleteAllRows                  a flag whether the target table should be emptied before 
+     * @param geoColumns                           the geometry columns array. A geometry column is a string separated by colons "colname:geomtype[:options]" 
+     */
     public TransferSet(String inputSqlFilePath, String outputQualifiedSchemaAndTableName, boolean outputDeleteAllRows,
             String[] geoColumns) {
         if (inputSqlFilePath == null || inputSqlFilePath.length() == 0)
@@ -29,6 +46,17 @@ public class TransferSet {
         initGeoColumnHash(geoColumns);
     }
 
+    /**
+     * Constructor for a transfer set.
+     *  
+     * @param inputSqlFilePath                     the input sql file path
+     * @param outputQualifiedSchemaAndTableName    the qualified target table name
+     * @param outputDeleteAllRows                  a flag whether the target table should be emptied before 
+     */
+    public TransferSet(String inputSqlFilePath, String outputQualifiedSchemaAndTableName, boolean outputDeleteAllRows) {
+        this(inputSqlFilePath, outputQualifiedSchemaAndTableName, outputDeleteAllRows, null);
+    }
+    
     private void initGeoColumnHash(String[] colList) {
         geoColumns = new HashMap<String, GeometryTransform>();
 
@@ -42,10 +70,6 @@ public class TransferSet {
                 geoColumns.put(trans.getColNameUpperCase(), trans);
             }
         }
-    }
-
-    public TransferSet(String inputSqlFilePath, String outputQualifiedSchemaAndTableName, boolean outputDeleteAllRows) {
-        this(inputSqlFilePath, outputQualifiedSchemaAndTableName, outputDeleteAllRows, null);
     }
 
     public boolean getDeleteAllRows() {
@@ -68,6 +92,14 @@ public class TransferSet {
         return geoColumns.containsKey(colName.toUpperCase());
     }
 
+    /**
+     * Wraps a geometry column with a specific geometry function (wkb, wkt or 
+     * geojson) for the insert statement, e.g. "perimeter" -> "ST_GeomFromText(\"perimeter\", 2056)".
+     * 
+     * @param colName             the geometry column name
+     * @param valuePlaceHolder    the prepared statement value placeholder (e.g. "?")
+     * @return the sql function string
+     */
     public String wrapWithGeoTransformFunction(String colName, String valuePlaceHolder) {
         String res = null;
 
