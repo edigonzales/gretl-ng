@@ -19,7 +19,8 @@ public class FileStylingDefinition {
      * Checks the given file if it is encoded in UTF-8
      *
      * @param inputfile a file
-     * @throws Exception if the File is not encoded in UTF-8 an exception will be
+     * @throw FileNotFoundException if the file is not found a FileNotFoundException will be thrown.
+     * @throws GretlException if the file is not encoded in UTF-8 an GretlException will be
      *                   thrown.
      */
     public static void checkForUtf8(File inputfile) throws Exception {

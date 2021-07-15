@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.15.0'
+    id 'groovy'
 }
 
 apply from: "$rootDir/gradle/versioning.gradle"
@@ -48,6 +49,8 @@ dependencies {
     runtimeOnly oracleDependency
 
     testImplementation junitDependency
+    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    //testImplementation 'org.codehaus.groovy:groovy-all:3.0.8'
 }
 
 gradlePlugin {
@@ -70,10 +73,6 @@ pluginBundle {
             description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
         }
     }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
 
 publishing {
