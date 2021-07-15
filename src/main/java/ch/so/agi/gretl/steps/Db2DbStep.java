@@ -136,7 +136,7 @@ public class Db2DbStep {
                     sourceDb.connect().rollback();
                 } catch (SQLException e) {
                     log.error("failed to rollback", e);
-                }finally {
+                } finally {
                     try {
                         sourceDb.close();
                     } catch (SQLException e) {
@@ -149,7 +149,7 @@ public class Db2DbStep {
                     targetDb.connect().rollback();
                 } catch (SQLException e) {
                     log.error("failed to rollback", e);
-                }finally {
+                } finally {
                     try {
                         targetDb.close();
                     } catch (SQLException e) {
