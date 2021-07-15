@@ -22,7 +22,7 @@ public class SqlReader {
      * 
      * @param sqlfile the file containing the sql statements
      * @return the sql statement string
-     * @throws IOException
+     * @throws IOException if the pushback reader cannot be created
      */
     public String readSqlStmt(File sqlfile) throws IOException {
         return readSqlStmt(sqlfile, null);
@@ -34,7 +34,7 @@ public class SqlReader {
      * @param sqlfile   the file containing the sql statements
      * @param params    the parameters the will be used to replaced the placeholders
      * @return the sql statement string
-     * @throws IOException
+     * @throws IOException if the pushback reader cannot be created
      */
     public String readSqlStmt(File sqlfile, Map<String, String> params) throws IOException {
         if (reader != null) {
@@ -61,7 +61,8 @@ public class SqlReader {
      * readSqlStmt(...) is called. 
      * 
      * @return The sql statement string. 
-     * @throws IOException
+     * @throws IOException if the sql statement could not be read with the
+     * ch.ehi.sqlgen.SqlReader()
      */
     public String nextSqlStmt() throws IOException {
         if (reader == null) {
@@ -77,7 +78,7 @@ public class SqlReader {
     /**
      * Closes the pushback reader.
      * 
-     * @throws IOException
+     * @throws IOException if the reader cannot be closed
      */
     public void close() throws IOException {
         if (reader != null) {

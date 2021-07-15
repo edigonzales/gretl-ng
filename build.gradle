@@ -40,6 +40,7 @@ dependencies {
     api ilivalidatorDependency
     api ili2dbDependency
     api ili2pgDependency
+    api ehiSqlgenDependency
 
     runtimeOnly postgresqlDependency
     runtimeOnly sqliteJdbcDependency

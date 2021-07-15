@@ -6,7 +6,7 @@ ext {
     ili2pgVersion = '4.5.0'
     // ili2gpkgVersion = '4.3.2'
     // ioxWkfVersion = '1.0.2'
-    // ehiSqlgenVersion = '1.13.7'
+    ehiSqlgenVersion = '1.14.0'
     
     // oerebIconizerVersion = '2.0.9'
     // av2chVersion = '1.1.6'
@@ -37,8 +37,7 @@ ext {
     // ili2gpkgDependency = [ group: 'ch.interlis', name: 'ili2gpkg', version: ili2gpkgVersion ]
     // ioxWkfDependency = [ group: 'ch.interlis', name: 'iox-wkf', version: ioxWkfVersion ]
     
-    // TODO: Brauche ich das explizit für SqlExecutor/Db2Db?
-    // ehiSqlgenDependency = [ group: 'ch.ehi', name: 'ehisqlgen', version: ehiSqlgenVersion ]
+    ehiSqlgenDependency = [ group: 'ch.ehi', name: 'ehisqlgen', version: ehiSqlgenVersion ]
 
     // oerebIconizerDependency = [ group: 'io.github.sogis', name: 'oereb-iconizer', version: oerebIconizerVersion ]
     // av2chDependency = [ group: 'io.github.sogis', name: 'av2ch', version: av2chVersion ]

@@ -94,7 +94,7 @@ public class TransferSet {
 
     /**
      * Wraps a geometry column with a specific geometry function (wkb, wkt or 
-     * geojson) for the insert statement, e.g. "perimeter" -> "ST_GeomFromText(\"perimeter\", 2056)".
+     * geojson) for the insert statement, e.g. "perimeter" -&gt; "ST_GeomFromText(\"perimeter\", 2056)".
      * 
      * @param colName             the geometry column name
      * @param valuePlaceHolder    the prepared statement value placeholder (e.g. "?")

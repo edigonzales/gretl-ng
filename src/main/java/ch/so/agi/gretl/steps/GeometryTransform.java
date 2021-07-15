@@ -5,7 +5,7 @@ import ch.so.agi.gretl.util.GretlException;
 /**
  * The GeometryTransform class is used for wrapping sql geometry function around
  * a geometry column to abstract the geometry data type handling, e.g. to transfer
- * geometrie between to different database vendors and/or versions like oracle ->
+ * geometrie between to different database vendors and/or versions like oracle -&gt;
  * postgis. 
  * 
  * Supported abstractions are: WKT, WBK and GeoJson.
@@ -70,7 +70,7 @@ public abstract class GeometryTransform {
      * placeholder for the prepared statement.  
      * 
      * @param valuePlaceholer the placeholder for the prepared statement.
-     * @return
+     * @return the sql function statement
      */
     public abstract String wrapWithGeoTransformFunction(String valuePlaceholer);
 

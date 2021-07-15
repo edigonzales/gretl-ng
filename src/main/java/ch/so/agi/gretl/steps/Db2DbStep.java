@@ -55,7 +55,7 @@ public class Db2DbStep {
      * @param sourceDb     The source database connection
      * @param targetDb     The target database connection
      * @param transferSets A list of transfer sets
-     * @throws Exception
+     * @throws Exception todo
      */
     public void processAllTransferSets(Connector sourceDb, Connector targetDb, List<TransferSet> transferSets)
             throws Exception {
@@ -166,7 +166,8 @@ public class Db2DbStep {
      * @param srcCon      source database connection
      * @param targetCon   target database connection
      * @param transferSet transferset
-     * @throws SQLException
+     * @throws SQLException if the resultset or the insert row statement could not 
+     * be created or if the batch could not be executed 
      * @throws FileNotFoundException
      * @throws EmptyFileException
      * @throws NotAllowedSqlExpressionException
