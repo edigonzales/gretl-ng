@@ -16,10 +16,26 @@ public class SqlReader {
     private Map<String, String> params = null;
     private GretlLogger log = LogEnvironment.getLogger(SqlReader.class);
 
+
+    /**
+     * Reads sql statements from a given file.
+     * 
+     * @param sqlfile the file containing the sql statements
+     * @return the sql statement string
+     * @throws IOException
+     */
     public String readSqlStmt(File sqlfile) throws IOException {
         return readSqlStmt(sqlfile, null);
     }
 
+    /**
+     * Reads sql statements from a given file and replaces placeholders 
+     * (${param}) in the sql statement.
+     * @param sqlfile   the file containing the sql statements
+     * @param params    the parameters the will be used to replaced the placeholders
+     * @return the sql statement string
+     * @throws IOException
+     */
     public String readSqlStmt(File sqlfile, Map<String, String> params) throws IOException {
         if (reader != null) {
             throw new IllegalStateException("readSqlStmt() must only be called for the first statement");
@@ -40,6 +56,13 @@ public class SqlReader {
         reader = new PushbackReader(sqlFileReader);
     }
 
+    /**
+     * Reads the next sql statement the file. Can only be called after 
+     * readSqlStmt(...) is called. 
+     * 
+     * @return The sql statement string. 
+     * @throws IOException
+     */
     public String nextSqlStmt() throws IOException {
         if (reader == null) {
             return null;
@@ -51,6 +74,11 @@ public class SqlReader {
         return ret;
     }
 
+    /**
+     * Closes the pushback reader.
+     * 
+     * @throws IOException
+     */
     public void close() throws IOException {
         if (reader != null) {
             reader.close();
