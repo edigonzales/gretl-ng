@@ -148,3 +148,20 @@ tasks.register('createSchema', Ili2pgImportSchema) {
     createImportTabs = true
     createscript = file("/Users/stefan/Downloads/fubar.sql")
 }
+
+tasks.register('transferSomeData', Db2Db) {
+    sourceDb {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    targetDb {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    sqlParameters = [dataset:'Olten']
+    transferSets = [
+        new TransferSet('some.sql', 'albums_dest', true)
+    ];
+}

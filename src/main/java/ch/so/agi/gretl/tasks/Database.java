@@ -5,7 +5,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 
-public interface Database {
+public abstract class Database {
     @Internal
     public abstract Property<String> getUri();
     
@@ -14,4 +14,10 @@ public interface Database {
     
     @Internal
     public abstract Property<String> getPassword();
+
+//    @Override
+//    public String toString() {
+//        return "Database [uri=" + getUri().get() + ", user=" + getUser().get() + ", password=******"
+//                + "]";
+//    }
 }

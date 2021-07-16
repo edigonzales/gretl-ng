@@ -195,7 +195,7 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
                 throw new TaskExecutionException(this, e);
             }
         } else {
-            Connector database = new Connector(getDatabase().getUri().getOrNull(), 
+            Connector database = new Connector(getDatabase().getUri().get(), 
                     getDatabase().getUser().getOrNull(), 
                     getDatabase().getPassword().getOrNull());
             try {

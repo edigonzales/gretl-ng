@@ -13,7 +13,8 @@ gradle fubar validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G
 - Wie Tasks automatisch dokumentieren? javadoc? Reicht das? Verweis in User Manual auf Javadoc?
 - ili2pg Import:
   * 
-
+- move connector from api to ... utils? dito transferset (we'll see)
+- Taskname output wenn geloggt wird (siehe db2db step)
 
 ## docs
 - ilivalidator: 
