@@ -14,7 +14,7 @@ ext {
     
     //awsSdkVersion = '2.15.64'
     
-    // apacheCommonsIoVersion = '2.6'
+    apacheCommonsIoVersion = '2.7'
     // apacheCommonsNetVersion = '3.6'
     // apacheCommonsCodeVersion = '1.11'
     
@@ -45,7 +45,7 @@ ext {
     
     // awsSdkS3Dependency = [ group: 'software.amazon.awssdk', name: 's3', version: '2.15.64' ]
     
-    // apacheCommonsIoDependency = [ group: 'commons-io', name: 'commons-io', version: apacheCommonsIoVersion ]
+    apacheCommonsIoDependency = [ group: 'commons-io', name: 'commons-io', version: apacheCommonsIoVersion ]
     // apacheCommonsNetDependency = [ group: 'commons-net', name: 'commons-net', version: apacheCommonsNetVersion ]
     // apacheCommonsCodeDependency = [ group: 'commons-codec', name: 'commons-codec', version: apacheCommonsCodeVersion ]
     

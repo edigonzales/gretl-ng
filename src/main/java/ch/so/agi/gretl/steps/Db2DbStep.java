@@ -17,6 +17,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,12 @@ public class Db2DbStep {
         }
     }
 
+    public void processAllTransferSets(Connector sourceDb, Connector targetDb, List<TransferSet> transferSets)
+            throws Exception {
+        processAllTransferSets(sourceDb, targetDb, transferSets, new Settings(),
+                new HashMap<String, String>());
+    }
+
     /**
      * Main method. Calls for each transferSet the private method 
      * processTransferSet.
@@ -55,14 +62,10 @@ public class Db2DbStep {
      * @param sourceDb     The source database connection
      * @param targetDb     The target database connection
      * @param transferSets A list of transfer sets
+     * @param settings Settings for fetch and batch size
+     * @param params A map containing the parameters and values to be replaced in the sql queries 
      * @throws Exception todo
      */
-    public void processAllTransferSets(Connector sourceDb, Connector targetDb, List<TransferSet> transferSets)
-            throws Exception {
-        processAllTransferSets(sourceDb, targetDb, transferSets, new Settings(),
-                new java.util.HashMap<String, String>());
-    }
-
     public void processAllTransferSets(Connector sourceDb, Connector targetDb, List<TransferSet> transferSets,
             Settings settings, Map<String, String> params) throws Exception {
         assertValidTransferSets(transferSets);
@@ -107,7 +110,7 @@ public class Db2DbStep {
                 }
                 // Check if File is UTF8
                 FileStylingDefinition.checkForUtf8(transferSet.getInputSqlFile());
-                // Check if File contains no BOM. If File is Empty, there will be a
+                // Check if File contains no BOM. If File is empty, there will be a
                 // NullPointerException catched away.
                 try {
                     FileStylingDefinition.checkForBOMInFile(transferSet.getInputSqlFile());

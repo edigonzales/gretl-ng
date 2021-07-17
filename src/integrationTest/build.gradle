@@ -165,3 +165,12 @@ tasks.register('transferSomeData', Db2Db) {
         new TransferSet('foo.sql', 'agi_dm01avso24_sink.fixpunktekatgrie3_lfp3nachfuehrung', true),
     ];
 }
+
+tasks.register('executeSomeSql', SqlExecutor) {
+    database {
+        uri = "jdbc:postgresql://localhost:54321/edit"
+        user = "gretl"
+        password = "gretl"
+    }
+    sqlFiles = ['demo.sql']
+}

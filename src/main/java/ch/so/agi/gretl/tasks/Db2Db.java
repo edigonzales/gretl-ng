@@ -34,7 +34,11 @@ public abstract class Db2Db extends DefaultTask {
     @Nested
     public abstract Database getTargetDb();
     
-    @Input
+    // Es kann @Input verwendet werden, da die Dateien nicht als File referenziert
+    // werden, sondern nur als String. Entsprechend würde Task nicht ausgeführt
+    // werden, wenn sich das File zwar ändert aber der Pfad zum File (also der
+    // String) nicht.
+    @Internal
     public abstract ListProperty<TransferSet> getTransferSets();
     
     @Internal
