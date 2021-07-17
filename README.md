@@ -27,6 +27,8 @@ gradle fubar validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G
   * Locale.setDefault(new Locale("de_CH")); Ist das nur ein ili1-Problem? Nur ein macOS-Problem? Kommt mir irgendwie bekannt vor.
 - db2db:
   * falls nicht vorhanden: geom columns...
+- alte vs. neue plugin syntax. Beispiele für beide Varianten.
+
 
 - devdoc:
   * https://docs.gradle.org/current/userguide/implementing_gradle_plugins.html

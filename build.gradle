@@ -1,93 +1,29 @@
-plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.15.0'
-    id 'groovy'
+allprojects {
+    group 'io.github.sogis' 
+	
+	apply from: "$rootDir/versioning.gradle"
+	
+    // TODO siehe gretl/build.gradle
+    /*
+    repositories {
+        mavenLocal()
+        maven { url "http://jars.interlis.ch" }
+        maven { url "https://repo.osgeo.org/repository/release/" }
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    } 
+    */   
 }
 
-apply from: "$rootDir/gradle/versioning.gradle"
-apply from: 'dependencies.gradle'
-
-group = 'io.github.sogis'
-version = '0.0.1'
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-    maven { url "http://jars.interlis.ch"; allowInsecureProtocol true }
+// TODO: brauche ich das?
+def env(environmentVariableName){
+    return env(environmentVariableName, 'UNDEFINED')
 }
 
-
-configurations.all {
-    resolutionStrategy { 
-        force 'ch.ehi:ehibasic:1.4.1'
-        force 'ch.interlis:iox-api:1.0.4'
-        force 'ch.interlis:iox-ili:1.21.6'
-        //force 'ch.interlis:iox-wkf:1.0.2'
-        force 'ch.interlis:ili2c-tool:5.2.2'
-        force 'ch.interlis:ili2c-core:5.2.2'
-        force 'ch.interlis:ili2db:4.5.0'
-        force 'ch.interlis:ili2pg:4.5.0'
-        //force 'ch.interlis:ili2gpkg:4.3.2'
+def env(environmentVariableName, defaultValue) {
+    def var = System.getenv(environmentVariableName)
+    if (var == null || var.length() == 0) {
+        var = defaultValue
     }
-}
-
-dependencies {
-    api gradleApi()
-  
-    api ilivalidatorDependency
-    api ili2dbDependency
-    api ili2pgDependency
-    api ehiSqlgenDependency
-    
-    api apacheCommonsIoDependency
-
-    runtimeOnly postgresqlDependency
-    runtimeOnly sqliteJdbcDependency
-    runtimeOnly derbyDependency
-    runtimeOnly oracleDependency
-
-    testImplementation junitDependency
-    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
-    //testImplementation 'org.codehaus.groovy:groovy-all:3.0.8'
-}
-
-gradlePlugin {
-    plugins {
-        gretlPlugin {
-            id = 'ch.so.agi.gretl-ng'
-            implementationClass = 'ch.so.agi.gretl.gradle.GretlPlugin'
-        }
-    }
-}
-
-pluginBundle {
-    website = 'https://github.com/edigonzales/gretl-ng' 
-    vcsUrl = 'https://github.com/edigonzales/gretl-ng.git' 
-    tags = ['etl', 'gis', 'sdi', 'geo', 'geoinformation', 'interlis', 'geopackage', 'shapefile', 'csv', 'database', 'postgresql', 'sqlite', 'ili2pg', 'ilivalidator'] 
-    
-    plugins { 
-        gretlPlugin {  
-            displayName = 'GRETL-ng' 
-            description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
-        }
-    }
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = 'gretl-ng'
-
-            from components.java
-        }
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    return var;
 }
