@@ -23,6 +23,7 @@ import org.gradle.api.tasks.TaskExecutionException;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Db2Db extends DefaultTask {
     private static GretlLogger log = LogEnvironment.getLogger(Db2Db.class);;
@@ -79,24 +80,22 @@ public abstract class Db2Db extends DefaultTask {
         if (getFetchSize().isPresent()) {
             settings.setValue(Db2DbStep.SETTING_FETCH_SIZE, getFetchSize().get().toString());
         }
-//        try {
-//            Db2DbStep step = new Db2DbStep(taskName);
-//            if (sqlParameters == null) {
-//                step.processAllTransferSets(sourceDb, targetDb, transferSets, settings, null);
-//            } else if(sqlParameters instanceof java.util.Map) {
-//                step.processAllTransferSets(sourceDb, targetDb, transferSets, settings, (java.util.Map<String,String>)sqlParameters);
-//            } else {
-//                java.util.List<java.util.Map<String,String>> paramList=(java.util.List<java.util.Map<String,String>>)sqlParameters;
-//                for (java.util.Map<String,String> sqlParams:paramList) {
-//                    step.processAllTransferSets(sourceDb, targetDb, transferSets, settings, sqlParams);
-//                }
-//            }
-//        } catch (Exception e) {
-//            log.error("Exception in creating / invoking Db2DbStep in Db2DbTask", e);
-//
-//            GradleException gradleEx = TaskUtil.toGradleException(e);
-//            throw gradleEx;
-//        }
+        try {
+            Db2DbStep step = new Db2DbStep(taskName);
+            if (!getSqlParameters().isPresent()) {
+                step.processAllTransferSets(sourceConnector, targetConnector, getTransferSets().get(), settings, null);
+            } else if(getSqlParameters().get() instanceof Map) {
+                step.processAllTransferSets(sourceConnector, targetConnector, getTransferSets().get(), settings, (Map<String,String>)getSqlParameters().get());
+            } else {
+                List<Map<String,String>> paramList = (List<Map<String,String>>)getSqlParameters().get();
+                for (Map<String,String> sqlParams : paramList) {
+                    step.processAllTransferSets(sourceConnector, targetConnector, getTransferSets().get(), settings, sqlParams);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Exception in creating / invoking Db2DbStep in Db2DbTask", e);
+            throw new TaskExecutionException(this, e);
+        }
     }
 
     private void convertToAbsolutePaths(List<TransferSet> transferSets) {

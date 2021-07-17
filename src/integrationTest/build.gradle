@@ -160,8 +160,8 @@ tasks.register('transferSomeData', Db2Db) {
         user = "gretl"
         password = "gretl"
     }
-    sqlParameters = [dataset:'Olten']
+    sqlParameters = [mySchema:'agi_dm01avso24']
     transferSets = [
-        new TransferSet('some.sql', 'albums_dest', true)
+        new TransferSet('foo.sql', 'agi_dm01avso24_sink.fixpunktekatgrie3_lfp3nachfuehrung', true),
     ];
 }

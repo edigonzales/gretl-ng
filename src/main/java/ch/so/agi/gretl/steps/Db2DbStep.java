@@ -114,7 +114,6 @@ public class Db2DbStep {
                 } catch (NullPointerException e) {
                 }
                 ;
-
                 int rowCount = processTransferSet(sourceDbConnection, targetDbConnection, transferSet, params);
                 rowCountStrings.add(Integer.toString(rowCount));
             }
@@ -183,7 +182,6 @@ public class Db2DbStep {
         log.debug("SQL statement: " + selectStatement);
         ResultSet rs = createResultSet(srcCon, selectStatement);
         PreparedStatement insertRowStatement = createInsertRowStatement(srcCon, targetCon, rs, transferSet);
-
         int columncount = rs.getMetaData().getColumnCount();
         int k = 0;
         while (rs.next()) {
