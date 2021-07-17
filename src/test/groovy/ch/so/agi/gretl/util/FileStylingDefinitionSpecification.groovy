@@ -4,7 +4,6 @@ import spock.lang.Specification
 import spock.lang.TempDir
 
 class FileStylingDefinitionSpecification extends Specification {
-    
     @TempDir
     File tempDir
     
