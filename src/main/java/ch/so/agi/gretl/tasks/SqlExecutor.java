@@ -70,7 +70,6 @@ public abstract class SqlExecutor extends DefaultTask {
                 for(Map<String,String> sqlParams : paramList) {
                     step.execute(database, files, sqlParams);
                 }
-                
             }
             log.info("Task start");
         } catch (Exception e) {
