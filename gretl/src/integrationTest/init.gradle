@@ -1,0 +1,17 @@
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        plugins {
+            id 'ch.so.agi.gretl' version 'latest.integration'
+        }
+        /*
+        resolutionStrategy {
+        }
+        */
+        repositories {
+            mavenLocal()
+            maven { url "http://jars.interlis.ch"; allowInsecureProtocol true  }
+            maven { url "https://repo.osgeo.org/repository/release/" }
+            mavenCentral()
+        }
+    }
+}

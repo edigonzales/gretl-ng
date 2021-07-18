@@ -1,0 +1,13 @@
+plugins {
+    id 'ch.so.agi.gretl'
+    id "org.hidetake.ssh"
+    id "de.undercouch.download" 
+}
+
+tasks.register('fubar') {
+    doLast {
+        println "Hallo Welt."
+    }
+}
+
+// TODO: Kann man löschen. War nur zu Testzwecken.

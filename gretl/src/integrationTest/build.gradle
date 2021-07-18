@@ -1,3 +1,4 @@
+/*
 buildscript {
     repositories {
         mavenLocal()
@@ -11,17 +12,18 @@ buildscript {
     }
     
 }
+*/
 
 /*
 plugins {
-    //id 'ch.so.agi.gretl-ng' version '0.0.1'
-    id "com.gradle.enterprise"
+    id 'ch.so.agi.gretl-ng' version 'latest.integration'
 }
 */
 
-apply plugin: "ch.so.agi.gretl-ng"
-
-
+//apply plugin: "ch.so.agi.gretl-ng"
+plugins {
+    id 'ch.so.agi.gretl'
+}
 
 import ch.so.agi.gretl.tasks.*
 import ch.so.agi.gretl.api.*

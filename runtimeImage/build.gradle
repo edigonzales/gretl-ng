@@ -1,0 +1,57 @@
+/*
+plugins {
+    id 'ch.so.agi.gretl'
+    // TODO: weitere Plugins, z.B. de.undercouch:gradle-download-task und org.hidetake:gradle-ssh-plugin
+}
+
+tasks.register('fubar') {
+    doLast {
+        println "Hallo Welt."
+    }
+}
+*/
+
+//apply from: '../dependencies.gradle'
+apply plugin: 'java-library'
+
+// TODO: duplicate ??
+configurations.all {
+    resolutionStrategy { 
+        force 'ch.ehi:ehibasic:1.4.1'
+        force 'ch.interlis:iox-api:1.0.4'
+        force 'ch.interlis:iox-ili:1.21.6'
+        //force 'ch.interlis:iox-wkf:1.0.2'
+        force 'ch.interlis:ili2c-tool:5.2.2'
+        force 'ch.interlis:ili2c-core:5.2.2'
+        force 'ch.interlis:ili2db:4.5.0'
+        force 'ch.interlis:ili2pg:4.5.0'
+        //force 'ch.interlis:ili2gpkg:4.3.2'
+    }
+}
+
+// TODO: duplicate ??
+repositories {
+    mavenLocal()
+    maven { url "http://jars.interlis.ch"; allowInsecureProtocol true }
+    maven { url "https://repo.osgeo.org/repository/release/" }
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+dependencies {
+    // Add latest gretl jar. It will download the plugin
+    // also from the plugin repo but will use always
+    // the latest 'anything' which is the local one.
+    api 'ch.so.agi:gretl:latest.integration'
+
+    // Add 3rd party libs which we want in the docker image.
+    api 'de.undercouch:gradle-download-task:4.1.2'
+    api 'org.hidetake:gradle-ssh-plugin:2.10.1'
+}
+
+task stageJars(type: Copy) {
+    description = 'Copies all jars required by gretl to the temp folder __jars4image.'
+    from configurations.compileClasspath
+    from configurations.runtimeClasspath
+    into "gretl/__jars4image"
+}

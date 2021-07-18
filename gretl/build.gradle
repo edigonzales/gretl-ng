@@ -59,7 +59,7 @@ dependencies {
 gradlePlugin {
     plugins {
         gretlPlugin {
-            id = 'ch.so.agi.gretl-ng'
+            id = 'ch.so.agi.gretl'
             implementationClass = 'ch.so.agi.gretl.gradle.GretlPlugin'
         }
     }
@@ -72,7 +72,7 @@ pluginBundle {
     
     plugins { 
         gretlPlugin {  
-            displayName = 'GRETL-ng' 
+            displayName = 'GRETL' 
             description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
         }
     }
@@ -82,7 +82,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = group
-            artifactId = 'gretl-ng'
+            artifactId = 'gretl'
 
             from components.java
         }

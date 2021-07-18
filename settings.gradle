@@ -1,4 +1,4 @@
 rootProject.name = 'gretl-ng'
 include 'gretl'
-//include 'runtimeImage'
+include 'runtimeImage'
 
