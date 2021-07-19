@@ -1,14 +1,12 @@
-// TODO: fix path. __jars4image -> /home/gradle/libs oder so.
-
 allprojects {
     buildscript {
         repositories {
             flatDir {
-                dirs '__jars4image'
+                dirs '/home/gradle/libs'
             }
         }
         dependencies {
-            classpath fileTree(dir: '__jars4image', include: '*.jar')
+            classpath fileTree(dir: '/home/gradle/libs', include: '*.jar')
         }
     }
 }
@@ -35,7 +33,7 @@ settingsEvaluated { settings ->
         // Zwingend, da sonst die Plugins heruntergeladen werden.
         repositories {
             flatDir {
-                dirs '__jars4image'
+                dirs '/home/gradle/libs'
             }
         }
     }

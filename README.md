@@ -14,6 +14,9 @@ gradle  validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G --init-script init.
 ../gradlew tasks --all --init-script init.gradle -i
 ```
 
+```
+docker buildx build --platform linux/amd64,linux/arm64  -t edigonzales/gretl-runtime -f Dockerfile.alpine .
+```
 
 ## todo
 - Für Integrationtest neue oder alte Syntax. Jar würde sicher mit neuer funktionieren. Wie sieht es mit dem Dockerimage aus? Da müsste ich ja vorher von lokal das Plugin in das Image (nicht Container) deployen. -> müsste das Image komplett anders builden. ma guckn.
@@ -44,7 +47,9 @@ gradle  validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G --init-script init.
 - devdoc:
   * In das Image werden alle Jars (und nur die Jars) in eine flaches Verzeichnis (keine Maven-Repo-Struktur) kopiert. Die geschieht mittels eigenem build.gradle-File, das als Abhängigkeit das GRETL-Plugin und allenfalls weitere 3rd Party Plugins als einfache Abhängigkeit (nicht Plugin-DSL-Syntax) definiert. Damit ist das Docker Image, was die Runtime-Bibliotheken betrifft, offline fähig und ein geschlossenes System. 
   * Es ist möglich mit dem Docker Image die Plugin-DSL-Syntax zu verwenden (also der plugin {} Block). Damit das funktioniert, muss im init.gradle eine weitere Konfiguration für das Plugin-Handling geführt werden. Jedes Plugin im Plugin-Block erwartet ein spezielles Marker-POM-File, das im flachen Verzeichnis nun fehlt. Dies kann mittels speziellen Mapping (Plugin -> Jar) umgangen werden. Dieses Mapping muss für jedes Plugin gemacht werden. D.h. es muss nachgeführt werden, wenn neue Plugins reinkopiert werden.
-  
+  * Docker image: Probleme mit libssl und älteren Distro auf Apple Silicon siehe: https://docs.docker.com/docker-for-mac/release-notes/
+
+
   * https://docs.gradle.org/current/userguide/implementing_gradle_plugins.html
   * https://docs.gradle.org/current/userguide/lazy_configuration.html#lazy_configuration_reference
   * https://docs.gradle.org/current/userguide/custom_tasks.html
