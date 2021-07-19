@@ -18,6 +18,10 @@ gradle  validateData --no-daemon -Dorg.gradle.jvmargs=-Xmx2G --init-script init.
 docker buildx build --platform linux/amd64,linux/arm64  -t edigonzales/gretl-runtime -f Dockerfile.alpine .
 ```
 
+```
+export GUGUS=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')
+```
+
 ## todo
 - Für Integrationtest neue oder alte Syntax. Jar würde sicher mit neuer funktionieren. Wie sieht es mit dem Dockerimage aus? Da müsste ich ja vorher von lokal das Plugin in das Image (nicht Container) deployen. -> müsste das Image komplett anders builden. ma guckn.
 - Use TaskExecutionException instead of GradleException?
