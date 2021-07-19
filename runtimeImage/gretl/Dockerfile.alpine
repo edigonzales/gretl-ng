@@ -35,4 +35,10 @@ RUN mkdir -p ~/.gradle && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.pro
     ls -la /home/gradle && \
     ls -la /home/gradle/libs
 
+ENV GRADLE_VERSION 7.1.1
+ENV GRADLE_HOME /usr/bin/gradle
+#ENV GRADLE_USER_HOME /home/gradle/cache
+
+ENV PATH $PATH:$GRADLE_HOME/bin
+
 USER 1001 
