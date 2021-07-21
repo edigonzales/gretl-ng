@@ -176,3 +176,14 @@ tasks.register('executeSomeSql', SqlExecutor) {
     }
     sqlFiles = ['demo.sql']
 }
+
+tasks.register('downloadFileFromS3', S3Download) {
+    accessKey = "xxx"
+    secretKey = "yyy"
+    downloadDir = file(".")
+    bucketName = "ch.so.agi.geodata"
+    key = "ch.so.agi.av_gb_administrative_einteilungen_xtf.zip"
+    //endPoint = "https://s3.eu-central-1.amazonaws.com" 
+    //region = "eu-central-1"
+
+}

@@ -12,7 +12,7 @@ ext {
     // av2chVersion = '1.1.6'
     // av2geobauVersion = '1.0.2-SNAPSHOT'
     
-    //awsSdkVersion = '2.15.64'
+    awsSdkVersion = '2.17.1'
     
     apacheCommonsIoVersion = '2.7'
     // apacheCommonsNetVersion = '3.6'
@@ -43,7 +43,7 @@ ext {
     // av2chDependency = [ group: 'io.github.sogis', name: 'av2ch', version: av2chVersion ]
     // av2geobauDependency = [ group: 'ch.interlis', name: 'av2geobau', version: av2geobauVersion ]
     
-    // awsSdkS3Dependency = [ group: 'software.amazon.awssdk', name: 's3', version: '2.15.64' ]
+    awsSdkS3Dependency = [ group: 'software.amazon.awssdk', name: 's3', version: awsSdkVersion ]
     
     apacheCommonsIoDependency = [ group: 'commons-io', name: 'commons-io', version: apacheCommonsIoVersion ]
     // apacheCommonsNetDependency = [ group: 'commons-net', name: 'commons-net', version: apacheCommonsNetVersion ]

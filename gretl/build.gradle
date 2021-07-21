@@ -8,9 +8,6 @@ plugins {
 
 apply from: '../dependencies.gradle'
 
-//group = 'io.github.sogis'
-//version = '0.0.1'
-
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
@@ -45,6 +42,8 @@ dependencies {
     api ehiSqlgenDependency
     
     api apacheCommonsIoDependency
+    
+    api awsSdkS3Dependency
 
     runtimeOnly postgresqlDependency
     runtimeOnly sqliteJdbcDependency
