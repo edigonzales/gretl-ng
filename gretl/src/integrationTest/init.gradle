@@ -3,10 +3,6 @@ settingsEvaluated { settings ->
         plugins {
             id 'ch.so.agi.gretl' version 'latest.integration'
         }
-        /*
-        resolutionStrategy {
-        }
-        */
         repositories {
             mavenLocal()
             maven { url "http://jars.interlis.ch"; allowInsecureProtocol true  }
