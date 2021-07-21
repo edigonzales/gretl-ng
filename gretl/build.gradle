@@ -73,7 +73,7 @@ pluginBundle {
     plugins { 
         gretlPlugin {  
             displayName = 'GRETL' 
-            description = 'The Gradle gretl plugin extends gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
+            description = 'The Gradle gretl plugin extends Gradle for use as a sql-centric (geo)data etl. GRETL = Gradle ETL.' 
         }
     }
 }
@@ -95,8 +95,7 @@ task setupPluginUpload() {
 	    def key = System.env.gradlePublishKey
 	    def secret = System.env.gradlePublishSecret
 	
-	    if( !key || !secret)
-	    {
+	    if ( !key || !secret) {
 	        throw new RuntimeException("gradlePublishKey and/or gradlePublishSecret are not defined environment variables")
 	    }
 	
