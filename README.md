@@ -59,3 +59,5 @@ export GUGUS=$(./gradlew properties --no-daemon --console=plain -q | grep "^vers
   * https://docs.gradle.org/current/userguide/custom_tasks.html
   * https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks
   * https://docs.gradle.org/current/userguide/custom_gradle_types.html
+  * https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+  * https://docs.gradle.org/current/userguide/tutorial_using_tasks.html
