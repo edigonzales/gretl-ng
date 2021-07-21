@@ -1,7 +1,6 @@
 package ch.so.agi.gretl.steps;
 
 import ch.so.agi.gretl.util.*;
-import ch.so.agi.gretl.api.Connector;
 import ch.so.agi.gretl.logging.GretlLogger;
 import ch.so.agi.gretl.logging.LogEnvironment;
 

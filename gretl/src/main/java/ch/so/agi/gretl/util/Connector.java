@@ -1,6 +1,4 @@
-package ch.so.agi.gretl.api;
-
-import ch.so.agi.gretl.util.DbConnector;
+package ch.so.agi.gretl.util;
 
 import ch.so.agi.gretl.logging.GretlLogger;
 import ch.so.agi.gretl.logging.LogEnvironment;
