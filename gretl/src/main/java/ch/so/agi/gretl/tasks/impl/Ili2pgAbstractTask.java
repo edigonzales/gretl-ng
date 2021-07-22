@@ -184,8 +184,11 @@ public abstract class Ili2pgAbstractTask extends DefaultTask {
             settings.setTransferFileFormat(Config.ILIGML20);
         }
         if (getDisableRounding().isPresent() && getDisableRounding().get()) {
-            settings.setDisableRounding(true);;
-        }        
+            settings.setDisableRounding(true);
+        }     
+        if (!getFailOnException().isPresent()) {
+            getFailOnException().set(true);
+        }
         
         if (function == Config.FC_SCRIPT) {
             try {
