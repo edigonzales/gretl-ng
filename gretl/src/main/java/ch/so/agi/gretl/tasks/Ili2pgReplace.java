@@ -47,7 +47,7 @@ public abstract class Ili2pgReplace extends Ili2pgAbstractTask {
 
         List<String> datasetNames = null;
         List<Integer> datasetSubstringList = getDatasetSubstring().get();
-        if (getDataset().isPresent()) {
+        if (getDataset().isPresent()) {            
             if (getDataset().get() instanceof String) {
                 datasetNames = new ArrayList<String>();
                 datasetNames.add((String)getDataset().get());
@@ -66,7 +66,8 @@ public abstract class Ili2pgReplace extends Ili2pgAbstractTask {
                 }
             } else {
                 datasetNames = new ArrayList<String>();
-                if (getDatasetSubstring().isPresent()) {
+                // TODO: liefert isPresent() für ein ListProperty immer true zurück?
+                if (getDatasetSubstring().get().size() > 0) {
                     List<String> fileNames = (List)getDataset().get();
                     for (String fileName : fileNames) {
                         datasetNames.add(fileName.replaceFirst("[.][^.]+$", "")

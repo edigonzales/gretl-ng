@@ -33,6 +33,14 @@ configurations.all {
     }
 }
 
+// Fehlermeldung in Konsole "unknown recognition error type: groovyjarjarantlr4.v4.runtime.LexerNoViableAltException".
+// antlr braucht es nicht zur Laufzeit.
+/*
+configurations {
+    runtime.exclude group: "antlr", module: "antlr"
+}
+*/
+
 dependencies {
     api gradleApi()
   
