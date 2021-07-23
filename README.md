@@ -48,7 +48,7 @@ export GUGUS=$(./gradlew properties --no-daemon --console=plain -q | grep "^vers
   * falls nicht vorhanden: geom columns...
 - alte vs. neue plugin syntax. Beispiele für beide Varianten.
 - Dataset bei ili2pg muss String sein. Oder man führt noch if/else für Integer etc ein und casted.
-- Beispiel mit Copy-Task und implizit dependency. 2 Lösungen (entweder explizite Dependency oder via Variable und nicht Property)
+- Beispiel mit Copy-Task und implizit dependency. 2 Lösungen (entweder explizite Dependency oder via Variable und nicht Property) -> Ah nein. Die Ursache war, dass es nun sehr viele Importtasks gab, die vom selben "into"-Directory Daten lesen. Das verwirrt Gradle. -> einfachste Lösung: Subdirs im temp-Dir.
 
 - devdoc:
   * In das Image werden alle Jars (und nur die Jars) in eine flaches Verzeichnis (keine Maven-Repo-Struktur) kopiert. Die geschieht mittels eigenem build.gradle-File, das als Abhängigkeit das GRETL-Plugin und allenfalls weitere 3rd Party Plugins als einfache Abhängigkeit (nicht Plugin-DSL-Syntax) definiert. Damit ist das Docker Image, was die Runtime-Bibliotheken betrifft, offline fähig und ein geschlossenes System. 
