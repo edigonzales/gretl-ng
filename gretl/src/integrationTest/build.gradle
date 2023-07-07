@@ -32,7 +32,7 @@ import ch.so.agi.gretl.api.*
 def foo = 'a'
 
 def property = objects.property(String)
-def dbProperty = objects.property(Connector)
+//def dbProperty = objects.property(Connector)
 //property.set("arsch")
 
 tasks.register('fubar') {
@@ -52,8 +52,19 @@ task importData() {
 }
 */
 
+task copyItf1(type: Copy) {
+    from '/Users/stefan/Downloads/2524.ch.so.agi.av.dm01_ch_itf/2524.ch.so.agi.av.dm01_ch.itf'
+    into '/Users/stefan/Downloads/'
+}
+
+
+task copyItf2(type: Copy) {
+    from '/Users/stefan/Downloads/2523.ch.so.agi.av.dm01_ch_itf/2523.ch.so.agi.av.dm01_ch.itf'
+    into '/Users/stefan/Downloads/'
+}
+
 tasks.register('validateData', IliValidator) {
-    models = "DM01AVSO24LV95"
+    models = "DM01AVCH24LV95D"
     //dataFiles = ["/Users/stefan/Downloads/254900.itf"]
     //logFile = file("/Users/stefan/Downloads/ilivalidator.log")
     dataFiles = fileTree("/Users/stefan/Downloads/").matching {
