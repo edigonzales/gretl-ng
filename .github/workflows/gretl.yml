@@ -24,9 +24,9 @@ jobs:
           java-version: 1.8
       - name: Build with Gradle
         run: ./gradlew clean gretl:build gretl:publishPluginMavenPublicationToMavenLocal -x test
-      - name: Publish plugin
-        run: ./gradlew gretl:publishPlugins
-        if: ${{ github.ref == 'refs/heads/main' }}
-        env:
-          gradlePublishKey: ${{ secrets.GRADLE_PUBLISH_KEY }}
-          gradlePublishSecret: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+      # - name: Publish plugin
+      #   run: ./gradlew gretl:publishPlugins
+      #   if: ${{ github.ref == 'refs/heads/main' }}
+      #   env:
+      #     gradlePublishKey: ${{ secrets.GRADLE_PUBLISH_KEY }}
+      #     gradlePublishSecret: ${{ secrets.GRADLE_PUBLISH_SECRET }}

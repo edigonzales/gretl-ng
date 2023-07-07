@@ -59,16 +59,28 @@ task copyItf1(type: Copy) {
 
 
 task copyItf2(type: Copy) {
+    dependsOn 'copyItf1'
     from '/Users/stefan/Downloads/2523.ch.so.agi.av.dm01_ch_itf/2523.ch.so.agi.av.dm01_ch.itf'
     into '/Users/stefan/Downloads/'
 }
 
 tasks.register('validateData', IliValidator) {
-    models = "DM01AVCH24LV95D"
+    dependsOn 'copyItf2'
+    models = "SO_AFU_ABBAUSTELLEN_Publikation_20221103"
     //dataFiles = ["/Users/stefan/Downloads/254900.itf"]
-    //logFile = file("/Users/stefan/Downloads/ilivalidator.log")
+    logFile = file("/Users/stefan/Downloads/ilivalidator1.log")
     dataFiles = fileTree("/Users/stefan/Downloads/").matching {
-    	include "*.itf"
+    	include "*.xtf"
+    }
+}
+
+tasks.register('validateData2', IliValidator) {
+    dependsOn 'validateData'
+    models = "SO_AFU_ABBAUSTELLEN_Publikation_20221103"
+    //dataFiles = ["/Users/stefan/Downloads/254900.itf"]
+    logFile = file("/Users/stefan/Downloads/ilivalidator.log")
+    dataFiles = fileTree("/Users/stefan/Downloads/").matching {
+    	include "*.xtf"
     }
 }
 

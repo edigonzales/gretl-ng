@@ -15,6 +15,7 @@ import org.interlis2.validator.Validator;
 
 public abstract class AbstractValidatorTask extends DefaultTask {    
     @InputFiles
+    //@Internal
     public abstract Property<Object> getDataFiles();
     
     @Internal
